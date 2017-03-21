@@ -64,6 +64,7 @@ public class TesteAgencia {
 		// Delegated Setup
 		Banco bancoDoBrasil = criaBancoDoBrasil();
 		Agencia centro = criaAgenciaDoCentro(bancoDoBrasil);
+		Conta contaDaMaria = criaContaDaMaria(centro);
 		// Exercise SUT and verify outcome
 		assertEquals("0001-5", contaDaMaria.obterIdentificador());
 		assertEquals("Maria", contaDaMaria.obterTitular());
@@ -77,6 +78,7 @@ public class TesteAgencia {
 		// Delegated Setup
 		Banco bancoDoBrasil = criaBancoDoBrasil();
 		Agencia centro = criaAgenciaDoCentro(bancoDoBrasil);
+		Conta contaDaMaria = criaContaDaMaria(centro);
 		// In-line Setup
 		Dinheiro _10Reais = new Dinheiro(Moeda.BRL, 10, 00);
 		Operacao operacao = this.sistemaBancario.depositar(contaDaMaria, _10Reais);
@@ -91,6 +93,7 @@ public class TesteAgencia {
 		// Delegated Setup
 		Banco bancoDoBrasil = criaBancoDoBrasil();
 		Agencia centro = criaAgenciaDoCentro(bancoDoBrasil);
+		Conta contaDaMaria = criaContaDaMaria(centro);
 		// In-line Setup
 		Dinheiro _10Reais = new Dinheiro(Moeda.BRL, 10, 00);
 		this.sistemaBancario.depositar(contaDaMaria, _10Reais);
@@ -107,6 +110,7 @@ public class TesteAgencia {
 		// Delegated Setup
 		Banco bancoDoBrasil = criaBancoDoBrasil();
 		Agencia centro = criaAgenciaDoCentro(bancoDoBrasil);
+		Conta contaDaMaria = criaContaDaMaria(centro);
 		// In-line Setup
 		Dinheiro _4Reais = new Dinheiro(Moeda.BRL, 4, 00);
 		this.sistemaBancario.depositar(contaDaMaria, _4Reais);
@@ -126,6 +130,8 @@ public class TesteAgencia {
 		return banco.criarAgencia("Centro");
 	}
 	
+	public Conta criaContaDaMaria(Agencia agencia){
+		return agencia.criarConta("Maria");
 	}
 	
 	public Operacao saqueDe6Reais(Conta conta){
