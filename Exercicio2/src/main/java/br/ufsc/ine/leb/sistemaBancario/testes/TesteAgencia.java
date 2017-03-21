@@ -39,6 +39,7 @@ public class TesteAgencia {
 	// Caso de Teste 1
 	@Test
 	public void criacaoDoBancoDoBrasil(){
+		// Implicit Setup
 		// Delegated Setup
 		Banco bancoDoBrasil = criaBancoDoBrasil();
 		// Exercise SUT and verify outcome
@@ -49,6 +50,7 @@ public class TesteAgencia {
 	// Caso de Teste 2
 	@Test
 	public void criacaoDaAgenciaCentro(){
+		// Implicit Setup
 		// Delegated Setup
 		Banco bancoDoBrasil = criaBancoDoBrasil();
 		Agencia centro = criaAgenciaDoCentro(bancoDoBrasil);
@@ -61,6 +63,7 @@ public class TesteAgencia {
 	// Caso de Teste 3
 	@Test
 	public void criacaoDaContaDaMaria(){
+		// Implicit Setup
 		// Delegated Setup
 		Banco bancoDoBrasil = criaBancoDoBrasil();
 		Agencia centro = criaAgenciaDoCentro(bancoDoBrasil);
@@ -75,6 +78,7 @@ public class TesteAgencia {
 	// Caso de Teste 4
 	@Test
 	public void realizarOperacaoDeDeposito(){
+		// Implicit Setup
 		// Delegated Setup
 		Banco bancoDoBrasil = criaBancoDoBrasil();
 		Agencia centro = criaAgenciaDoCentro(bancoDoBrasil);
@@ -90,6 +94,7 @@ public class TesteAgencia {
 	// Caso de Teste 5
 	@Test
 	public void realizarSaqueDe6ReaisComSaldoDe10Reais(){
+		// Implicit Setup
 		// Delegated Setup
 		Banco bancoDoBrasil = criaBancoDoBrasil();
 		Agencia centro = criaAgenciaDoCentro(bancoDoBrasil);
@@ -107,6 +112,7 @@ public class TesteAgencia {
 	// Caso de Teste 6
 	@Test
 	public void realizarSaqueDe6ReaisComSaldoDe4Reais(){
+		// Implicit Setup
 		// Delegated Setup
 		Banco bancoDoBrasil = criaBancoDoBrasil();
 		Agencia centro = criaAgenciaDoCentro(bancoDoBrasil);
