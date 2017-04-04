@@ -11,7 +11,16 @@ public class PuzzleGame implements Puzzle{
 	private Position emptyCell;
 	private final SquareBoard boardWithFinalState;
 	
-
+	// Métodos criados para fazer os testes
+	public final SquareBoard getBoard(){
+		return this.board;
+	}
+	
+	public Position getEmptyCellPosition(){
+		return this.emptyCell;
+	}
+	// End
+	
 	public PuzzleGame(int dimension, StrategyShufflePuzzle shuffler){
 		this.boardWithFinalState = new SquareBoard (dimension);
 		this.board = new SquareBoard(dimension);
@@ -26,10 +35,9 @@ public class PuzzleGame implements Puzzle{
 		this.emptyCell = new Position(dimension,dimension);
 		
 		shuffler.shuffle(this); 
-		
 	}
 		
-	private void putTilesInTheBoard(SquareBoard t, List<Tile> list) {
+	protected void putTilesInTheBoard(SquareBoard t, List<Tile> list) {
 		Iterator<Tile> tilesListIterator = list.iterator();		
 		//from first line to the line before the last
 		for (int line=1; line<t.getDimension(); line++){
@@ -98,21 +106,21 @@ public class PuzzleGame implements Puzzle{
 	}
 	
 	public boolean moveEmptyCell(Direction direction) {
-		if (direction == Direction.DOWN) {
-			return this.moveDown();
+		if (direction == Direction.UP) {
+			return this.moveUp();
 		}
-		else if (direction == Direction.UP)
-				return this.moveUp();
+		else if (direction == Direction.DOWN)
+				return this.moveDown();
 			else
-				if (direction == Direction.RIGHT)
-					return this.moveRight();
+				if (direction == Direction.LEFT)
+					return this.moveLeft();
 				else
-					if (direction == Direction.LEFT)
-						return this.moveLeft();
+					if (direction == Direction.RIGHT)
+						return this.moveRight();
 		return false;
 	}
 
-	private boolean moveDown() {
+	private boolean moveUp() {
 		if (this.board.isInTheSuperiorBorder(this.emptyCell))
 			return false;
 		else {
@@ -128,7 +136,7 @@ public class PuzzleGame implements Puzzle{
 		}		
 	}
 	
-	private boolean moveUp() {
+	private boolean moveDown() {
 		if (this.board.isInTheBottomBorder(this.emptyCell))
 			return false;
 		else {
@@ -144,7 +152,7 @@ public class PuzzleGame implements Puzzle{
 		}		
 	}
 	
-	private boolean moveRight() {
+	private boolean moveLeft() {
 		if (this.board.isInTheLeftBorder(this.emptyCell))
 			return false;
 		else {
@@ -160,7 +168,7 @@ public class PuzzleGame implements Puzzle{
 		}		
 	}
 	
-	private boolean moveLeft() {
+	private boolean moveRight() {
 		if (this.board.isInTheRightBorder(this.emptyCell))
 			return false;
 		else {
