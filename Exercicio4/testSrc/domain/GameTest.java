@@ -19,6 +19,11 @@ public class GameTest {
 	}
 	
 	// Teste MoveEmptyCell em todas as direções
+	@Test 
+	public void testMoveEmptyCellWithInvalidPosition(){
+		assertFalse(game.moveEmptyCell(null));
+	}
+	
 	@Test
 	public void testMoveEmptyCellDown() {		
 		// Implicit Setup
