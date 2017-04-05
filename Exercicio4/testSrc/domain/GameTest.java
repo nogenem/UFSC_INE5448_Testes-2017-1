@@ -1,7 +1,10 @@
 package domain;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.junit.Before;
@@ -109,18 +112,29 @@ public class GameTest {
 	// Teste putTilesInTheBoard
 	@Test
 	public void testPutTilesInTheBoard(){
-		// Método putTilesInTheBoard ja é chamado no construtor do PuzzleGame
-		// que é criado no Implicit Setup
+		// Implicit Setup
 		
-		assertEquals(game.getBoard().getTile(new Position(1, 1)), new Tile(1));
-		assertEquals(game.getBoard().getTile(new Position(1, 2)), new Tile(2));
-		assertEquals(game.getBoard().getTile(new Position(1, 3)), new Tile(3));
-		assertEquals(game.getBoard().getTile(new Position(2, 1)), new Tile(4));
-		assertNull(game.getBoard().getTile(new Position(2, 2)));		
-		assertEquals(game.getBoard().getTile(new Position(2, 3)), new Tile(5));
-		assertEquals(game.getBoard().getTile(new Position(3, 1)), new Tile(7));
-		assertEquals(game.getBoard().getTile(new Position(3, 2)), new Tile(8));
-		assertEquals(game.getBoard().getTile(new Position(3, 3)), new Tile(6));
+		List<Tile> list = new ArrayList<>();
+		list.add(new Tile(10));
+		list.add(new Tile(11));
+		list.add(new Tile(12));
+		list.add(new Tile(13));
+		list.add(new Tile(14));
+		list.add(new Tile(15));
+		list.add(new Tile(16));
+		list.add(new Tile(17));
+		list.add(new Tile(18));
+		
+		game.putTilesInTheBoard(game.getBoard(), list);
+		
+		assertEquals(game.getBoard().getTile(new Position(1, 1)), new Tile(10));
+		assertEquals(game.getBoard().getTile(new Position(1, 2)), new Tile(11));
+		assertEquals(game.getBoard().getTile(new Position(1, 3)), new Tile(12));
+		assertEquals(game.getBoard().getTile(new Position(2, 1)), new Tile(13));
+		assertEquals(game.getBoard().getTile(new Position(2, 2)), new Tile(14));
+		assertEquals(game.getBoard().getTile(new Position(2, 3)), new Tile(15));
+		assertEquals(game.getBoard().getTile(new Position(3, 1)), new Tile(16));
+		assertEquals(game.getBoard().getTile(new Position(3, 2)), new Tile(17));
 	}
 	
 	@Test(expected=NoSuchElementException.class)
