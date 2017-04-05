@@ -15,7 +15,7 @@ public class GameTest {
 	
 	@Before
 	public void criaGame(){
-		game = new PuzzleGame(3, new ShufflePuzzleWithoutShuffle());
+		game = new PuzzleGame(3, new ShufflePuzzleEmptyCellInMiddle());
 	}
 	
 	// Teste MoveEmptyCell em todas as direções
@@ -26,82 +26,84 @@ public class GameTest {
 	
 	@Test
 	public void testMoveEmptyCellDown() {		
-		// Implicit Setup
+		// Implicit Setup [EmptyCell no meio do board]
 		
-		Position initialEmptyCellPos = game.getEmptyCellPosition();
+		Position initialEmptyCellPos = game.getEmptyCellPosition(),
+				finalEmptyCellPos = null;
 		
-		// Tenta mover para baixo e não deve acontecer nada
-		game.moveEmptyCell(Direction.DOWN);
-		Position finalEmptyCellPos = game.getEmptyCellPosition();
-		assertEquals(initialEmptyCellPos, finalEmptyCellPos);
-		
-		// Move para cima e depois para baixo e deve voltar a posição inicial
-		game.moveEmptyCell(Direction.UP);
+		// Move para baixo e a emptyCell deve ficar na mesma coluna
+		// e descer uma linha (neste caso, descer uma linha significa
+		// aumentar em 1 o valor da linha)
 		game.moveEmptyCell(Direction.DOWN);
 		finalEmptyCellPos = game.getEmptyCellPosition();
-		assertEquals(initialEmptyCellPos, finalEmptyCellPos);
+		assertEquals(initialEmptyCellPos.getColumn(), finalEmptyCellPos.getColumn());
+		assertEquals(initialEmptyCellPos.getLine()+1, finalEmptyCellPos.getLine());
+		
+		// Move para baixo de novo e a posição não deve mudar
+		initialEmptyCellPos = game.getEmptyCellPosition();
+		game.moveEmptyCell(Direction.DOWN);
+		finalEmptyCellPos = game.getEmptyCellPosition();
 	}
 	
 	@Test
 	public void testMoveEmptyCellUp() {		
-		// Implicit Setup
+		// Implicit Setup [EmptyCell no meio do board]
 		
-		Position initialEmptyCellPos = game.getEmptyCellPosition();
+		Position initialEmptyCellPos = game.getEmptyCellPosition(),
+				finalEmptyCellPos = null;
 		
-		// Move para cima e deve subir uma linha
+		// Move para cima e a emptyCell deve ficar na mesma coluna
+		// e subir uma linha (neste caso, subir uma linha significa
+		// diminuir em 1 o valor da linha)
 		game.moveEmptyCell(Direction.UP);
-		Position finalEmptyCellPos = game.getEmptyCellPosition();
-		assertNotEquals(initialEmptyCellPos, finalEmptyCellPos);
+		finalEmptyCellPos = game.getEmptyCellPosition();
+		assertEquals(initialEmptyCellPos.getColumn(), finalEmptyCellPos.getColumn());
 		assertEquals(initialEmptyCellPos.getLine()-1, finalEmptyCellPos.getLine());
 		
-		// Move para cima para chegar no topo do board
-		game.moveEmptyCell(Direction.UP);
+		// Move para cima de novo e a posição não deve mudar
 		initialEmptyCellPos = game.getEmptyCellPosition();
-		
-		// Move para cima e não deve acontecer nada
 		game.moveEmptyCell(Direction.UP);
 		finalEmptyCellPos = game.getEmptyCellPosition();
-		assertEquals(initialEmptyCellPos, finalEmptyCellPos);
-	}
-	
-	@Test
-	public void testMoveEmptyCellRight() {		
-		// Implicit Setup
-		
-		Position initialEmptyCellPos = game.getEmptyCellPosition();
-		
-		// Tenta mover para direita e não deve acontecer nada
-		game.moveEmptyCell(Direction.RIGHT);
-		Position finalEmptyCellPos = game.getEmptyCellPosition();
-		assertEquals(initialEmptyCellPos, finalEmptyCellPos);
-		
-		// Move para esquerda e depois para direita e deve voltar a posição inicial
-		game.moveEmptyCell(Direction.LEFT);
-		game.moveEmptyCell(Direction.RIGHT);
-		finalEmptyCellPos = game.getEmptyCellPosition();
-		assertEquals(initialEmptyCellPos, finalEmptyCellPos);
 	}
 	
 	@Test
 	public void testMoveEmptyCellLeft() {		
-		// Implicit Setup
+		// Implicit Setup [EmptyCell no meio do board]
 		
-		Position initialEmptyCellPos = game.getEmptyCellPosition();
+		Position initialEmptyCellPos = game.getEmptyCellPosition(),
+				finalEmptyCellPos = null;
 		
-		// Move para esquerda e deve diminuir uma coluna
-		game.moveEmptyCell(Direction.LEFT);
-		Position finalEmptyCellPos = game.getEmptyCellPosition();
-		assertNotEquals(initialEmptyCellPos, finalEmptyCellPos);
-		assertEquals(initialEmptyCellPos.getColumn()-1, finalEmptyCellPos.getColumn());
-		
-		// Move para esquerda para chegar na borda do board
-		game.moveEmptyCell(Direction.LEFT);
-		initialEmptyCellPos = game.getEmptyCellPosition();
-		
-		// Move para esquerda e não deve acontecer nada
+		// Move para esquerda e a emptyCell deve ficar na mesma linha
+		// e voltar uma coluna
 		game.moveEmptyCell(Direction.LEFT);
 		finalEmptyCellPos = game.getEmptyCellPosition();
-		assertEquals(initialEmptyCellPos, finalEmptyCellPos);
+		assertEquals(initialEmptyCellPos.getColumn()-1, finalEmptyCellPos.getColumn());
+		assertEquals(initialEmptyCellPos.getLine(), finalEmptyCellPos.getLine());
+		
+		// Move para esquerda de novo e a posição não deve mudar
+		initialEmptyCellPos = game.getEmptyCellPosition();
+		game.moveEmptyCell(Direction.LEFT);
+		finalEmptyCellPos = game.getEmptyCellPosition();
+	}
+	
+	@Test
+	public void testMoveEmptyCellRight() {		
+		// Implicit Setup [EmptyCell no meio do board]
+		
+		Position initialEmptyCellPos = game.getEmptyCellPosition(),
+				finalEmptyCellPos = null;
+		
+		// Move para direita e a emptyCell deve ficar na mesma linha
+		// e aumentar uma coluna
+		game.moveEmptyCell(Direction.RIGHT);
+		finalEmptyCellPos = game.getEmptyCellPosition();
+		assertEquals(initialEmptyCellPos.getColumn()+1, finalEmptyCellPos.getColumn());
+		assertEquals(initialEmptyCellPos.getLine(), finalEmptyCellPos.getLine());
+		
+		// Move para direita de novo e a posição não deve mudar
+		initialEmptyCellPos = game.getEmptyCellPosition();
+		game.moveEmptyCell(Direction.RIGHT);
+		finalEmptyCellPos = game.getEmptyCellPosition();
 	}
 	
 	// Teste putTilesInTheBoard
@@ -114,11 +116,11 @@ public class GameTest {
 		assertEquals(game.getBoard().getTile(new Position(1, 2)), new Tile(2));
 		assertEquals(game.getBoard().getTile(new Position(1, 3)), new Tile(3));
 		assertEquals(game.getBoard().getTile(new Position(2, 1)), new Tile(4));
-		assertEquals(game.getBoard().getTile(new Position(2, 2)), new Tile(5));
-		assertEquals(game.getBoard().getTile(new Position(2, 3)), new Tile(6));
+		assertNull(game.getBoard().getTile(new Position(2, 2)));		
+		assertEquals(game.getBoard().getTile(new Position(2, 3)), new Tile(5));
 		assertEquals(game.getBoard().getTile(new Position(3, 1)), new Tile(7));
 		assertEquals(game.getBoard().getTile(new Position(3, 2)), new Tile(8));
-		assertNull(game.getBoard().getTile(new Position(3, 3)));		
+		assertEquals(game.getBoard().getTile(new Position(3, 3)), new Tile(6));
 	}
 	
 	@Test(expected=NoSuchElementException.class)
