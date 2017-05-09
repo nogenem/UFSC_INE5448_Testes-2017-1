@@ -1,7 +1,6 @@
 package domain;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +18,14 @@ public class GameTest {
 	@Before
 	public void criaGame(){
 		game = new PuzzleGame(3, new ShufflePuzzleEmptyCellInMiddle());
+		return;
 	}
 	
 	// Teste MoveEmptyCell em todas as direções
 	@Test 
 	public void testMoveEmptyCellWithInvalidPosition(){
 		assertFalse(game.moveEmptyCell(null));
+		return;
 	}
 	
 	@Test
@@ -46,6 +47,7 @@ public class GameTest {
 		initialEmptyCellPos = game.getEmptyCellPosition();
 		game.moveEmptyCell(Direction.DOWN);
 		finalEmptyCellPos = game.getEmptyCellPosition();
+		return;
 	}
 	
 	@Test
@@ -67,6 +69,7 @@ public class GameTest {
 		initialEmptyCellPos = game.getEmptyCellPosition();
 		game.moveEmptyCell(Direction.UP);
 		finalEmptyCellPos = game.getEmptyCellPosition();
+		return;
 	}
 	
 	@Test
@@ -87,6 +90,7 @@ public class GameTest {
 		initialEmptyCellPos = game.getEmptyCellPosition();
 		game.moveEmptyCell(Direction.LEFT);
 		finalEmptyCellPos = game.getEmptyCellPosition();
+		return;
 	}
 	
 	@Test
@@ -107,6 +111,7 @@ public class GameTest {
 		initialEmptyCellPos = game.getEmptyCellPosition();
 		game.moveEmptyCell(Direction.RIGHT);
 		finalEmptyCellPos = game.getEmptyCellPosition();
+		return;
 	}
 	
 	// Teste putTilesInTheBoard
@@ -114,7 +119,7 @@ public class GameTest {
 	public void testPutTilesInTheBoard(){
 		// Implicit Setup
 		
-		List<Tile> list = new ArrayList<>();
+		List<Tile> list = new ArrayList<Tile>();
 		list.add(new Tile(10));
 		list.add(new Tile(11));
 		list.add(new Tile(12));
@@ -135,6 +140,7 @@ public class GameTest {
 		assertEquals(game.getBoard().getTile(new Position(2, 3)), new Tile(15));
 		assertEquals(game.getBoard().getTile(new Position(3, 1)), new Tile(16));
 		assertEquals(game.getBoard().getTile(new Position(3, 2)), new Tile(17));
+		return;
 	}
 	
 	@Test(expected=NoSuchElementException.class)
@@ -142,6 +148,7 @@ public class GameTest {
 		// Implicit Setup
 		
 		game.putTilesInTheBoard(game.getBoard(), new ArrayList<Tile>());
+		return;
 	}
 
 }
