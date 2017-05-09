@@ -1,5 +1,3 @@
-package testes;
-
 import java.util.Date;
 import java.util.List;
 
@@ -51,6 +49,7 @@ public class TesteMercadoLeilao {
 		
 		List<Lance> lances = mercado.retornaLancesDeUmUsuario(comprador.getCpf());
 		Lance lance = lances.get(0);
+		assertEquals(lance, lance.getProdutoQueRecebeuOLance().getLanceMaisRecente());
 		assertEquals(comprador.getCpf(), lance.getCpfDonoDoLance());
 		assertEquals(produto.getNome(), lance.getNomeProdutoQueRecebeuOLance());
 		assertEquals(valor, lance.getValorDoLance(), 0);
