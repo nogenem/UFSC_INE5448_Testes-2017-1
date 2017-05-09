@@ -42,6 +42,13 @@ public class TesteMercadoLeilao {
 		mercado.daLance("Balão", comprador.getCpf(), 1000.0);
 	}
 	
+	@Test(expected=Exception.class)
+	public void testeLanceMenorQueAtual() throws Exception {
+		double valor = produto.getLanceMinimo();
+		mercado.daLance(produto.getNome(), comprador.getCpf(), valor+10);
+		mercado.daLance(produto.getNome(), comprador.getCpf(), valor+5);
+	}
+	
 	@Test
 	public void testeLanceEfetuado() throws Exception {
 		double valor = produto.getLanceMinimo()+10;
