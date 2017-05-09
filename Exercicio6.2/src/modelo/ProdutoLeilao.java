@@ -79,7 +79,7 @@ public class ProdutoLeilao extends Produto implements IVendido, Serializable  {
 			int index = this.lancesEfetuados.size()-1;
 			return this.lancesEfetuados.get(index).getValorDoLance();
 		}catch(Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			return 0.0;
 		}
 		
