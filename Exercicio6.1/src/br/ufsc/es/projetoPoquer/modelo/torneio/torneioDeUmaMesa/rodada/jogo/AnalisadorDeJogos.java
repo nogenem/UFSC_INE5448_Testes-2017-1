@@ -106,7 +106,7 @@ public class AnalisadorDeJogos {
 			}
 
 		}
-		System.out.println(listas);
+//		System.out.println("Listas: " +listas);
 
 		// PARTE 4: Checar se tem quadra >>
 		if (quadras > ZERO) {
@@ -228,7 +228,7 @@ public class AnalisadorDeJogos {
 			cartas.add(ZERO, cartas.remove(cartas.size() - UM));
 			return true;
 		}
-
+		
 		boolean parada;
 		int i, fim;
 
