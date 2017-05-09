@@ -1,4 +1,9 @@
 # Minhas regras
+scova/
+mujava/
+lib/
+pitReports/
+build/
 
 # Created by https://www.gitignore.io/api/eclipse,maven,java,node,macos,windows
 
