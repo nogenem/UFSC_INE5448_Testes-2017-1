@@ -14,7 +14,7 @@ public class Conta {
 		this.titular = titular;
 		this.codigo = codigo;
 		this.agencia = agencia;
-		this.transacoes = new LinkedList<>();
+		this.transacoes = new LinkedList<Transacao>();
 	}
 
 	public String obterIdentificador() {

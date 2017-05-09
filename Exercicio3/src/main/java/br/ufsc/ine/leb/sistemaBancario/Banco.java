@@ -12,7 +12,7 @@ public class Banco {
 	protected Banco(String nome, Moeda moeda, Dinheiro taxa) {
 		this.nome = nome;
 		this.moeda = moeda;
-		this.agencias = new LinkedList<>();
+		this.agencias = new LinkedList<Agencia>();
 	}
 
 	public Agencia criarAgencia(String nome) {

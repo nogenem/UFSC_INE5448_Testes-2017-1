@@ -14,7 +14,7 @@ public class Agencia {
 		this.nome = nome;
 		this.codigo = codigo;
 		this.banco = banco;
-		this.contas = new LinkedList<>();
+		this.contas = new LinkedList<Conta>();
 	}
 
 	public Conta criarConta(String titular) {

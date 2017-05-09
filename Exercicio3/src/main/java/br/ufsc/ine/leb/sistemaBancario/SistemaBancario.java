@@ -8,7 +8,7 @@ public class SistemaBancario {
 	private List<Banco> bancos;
 
 	public SistemaBancario() {
-		bancos = new LinkedList<>();
+		bancos = new LinkedList<Banco>();
 	}
 
 	public Banco criarBanco(String nome, Moeda moeda) {
