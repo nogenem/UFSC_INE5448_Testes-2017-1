@@ -1,4 +1,4 @@
-package testes;
+package testes.gerenciador;
 
 import static org.junit.Assert.*;
 
