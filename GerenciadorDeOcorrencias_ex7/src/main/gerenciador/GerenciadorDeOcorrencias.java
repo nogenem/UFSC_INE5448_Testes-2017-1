@@ -1,30 +1,32 @@
 package main.gerenciador;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 import main.model.Funcionario;
 import main.model.Ocorrencia;
+import main.model.Ocorrencia.Prioridade;
+import main.model.Ocorrencia.Tipo;
 
 public class GerenciadorDeOcorrencias {
 	
-	private List<Ocorrencia> ocorrencias;
+	private HashMap<Long, Ocorrencia> ocorrencias;
 	
 	public GerenciadorDeOcorrencias() {
-		this.ocorrencias = new ArrayList<>();
+		this.ocorrencias = new HashMap<>();
 	}
 
-	public boolean cadastraOcorrencia(Ocorrencia ocorrencia, Funcionario funcionario) throws Exception {
-		if(!funcionarioPodeSerResponsavelPorMaisOcorrencias(funcionario))
-			throw new Exception("Funcionario "+funcionario.getNome()+" ja eh responsavel por 10 ocorrencias!");
+	public long cadastraOcorrencia(Prioridade prioridade, Tipo tipo, String resumo, Funcionario func) throws Exception {
+		if(!funcionarioPodeSerResponsavelPorMaisOcorrencias(func))
+			throw new Exception("Funcionario "+func.getNome()+" ja eh responsavel por 10 ocorrencias!");
 		
-		boolean retorno = ocorrencia.setResponsavel(funcionario);
-		retorno &= this.ocorrencias.add(ocorrencia);
-		return retorno; 
+		Ocorrencia ocorrencia = new Ocorrencia(prioridade, tipo, resumo);
+		ocorrencia.setResponsavel(func);
+		this.ocorrencias.put(ocorrencia.getUid(), ocorrencia);
+		return ocorrencia.getUid();
 	}
 
 	private boolean funcionarioPodeSerResponsavelPorMaisOcorrencias(Funcionario funcionario) {
-		int value = ocorrencias.stream().reduce(0, (sum, ocorrencia) -> { 
+		int value = ocorrencias.values().stream().reduce(0, (sum, ocorrencia) -> { 
 			return (ocorrencia.getResponsavel() == funcionario) ? sum + 1 : sum;
 		}, (sum1, sum2) -> sum1 + sum2);
 		return value < 10;

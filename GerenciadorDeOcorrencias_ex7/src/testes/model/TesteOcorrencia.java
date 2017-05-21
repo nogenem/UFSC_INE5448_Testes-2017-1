@@ -19,6 +19,7 @@ public class TesteOcorrencia {
 		assertEquals(Ocorrencia.Tipo.BUG, ocorrencia.getTipo());
 		assertEquals("Bug encontrado na classe Avião", ocorrencia.getResumo());
 		assertEquals(Ocorrencia.Status.ABERTA, ocorrencia.getStatus());
+		assertEquals(null, ocorrencia.getResponsavel());
 	}
 
 }

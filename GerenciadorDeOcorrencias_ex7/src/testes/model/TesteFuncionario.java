@@ -15,5 +15,4 @@ public class TesteFuncionario {
 		assertTrue(funcionario.getUid() > 0);
 		assertEquals("Fulano da Silva", funcionario.getNome());
 	}
-
 }

@@ -1,24 +1,25 @@
 package main.gerenciador;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 import main.model.Projeto;
 
 public class GerenciadorDeProjetos {
 	
-	private List<Projeto> projetos;
+	private HashMap<Long, Projeto> projetos;
 	
 	public GerenciadorDeProjetos() {
-		this.projetos = new ArrayList<>();
+		this.projetos = new HashMap<>();
 	}
 
 	public int getNumeroDeProjetos() {
 		return this.projetos.size();
 	}
 
-	public boolean cadastraProjeto(Projeto projeto) {
-		return this.projetos.add(projeto);
+	public long cadastraProjeto(String nome) {
+		Projeto projeto = new Projeto(nome);
+		this.projetos.put(projeto.getUid(), projeto);
+		return projeto.getUid();
 	}
 	
 }

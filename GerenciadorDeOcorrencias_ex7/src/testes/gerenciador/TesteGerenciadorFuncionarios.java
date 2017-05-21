@@ -12,11 +12,24 @@ public class TesteGerenciadorFuncionarios {
 	@Test
 	public void cadastraNovoFuncionario() {
 		GerenciadorDeFuncionarios gerenciador = new GerenciadorDeFuncionarios();	
-		Funcionario funcionario = new Funcionario("Fulano da Silva");
-		boolean retorno = gerenciador.cadastraFuncinario(funcionario);
+		long uid = gerenciador.cadastraFuncinario("Fulano da Silva");
 		
-		assertTrue(retorno);
+		assertTrue(uid > 0);
 		assertEquals(1, gerenciador.getNumeroDeFuncionarios());
 	}
-
+	
+	@Test
+	public void pegaFuncionarioPeloUidCorreto() throws Exception {
+		GerenciadorDeFuncionarios gerenciador = new GerenciadorDeFuncionarios();	
+		long uid = gerenciador.cadastraFuncinario("Fulano da Silva");
+		Funcionario func = gerenciador.getFuncionario(uid);
+		
+		assertEquals(uid, func.getUid());
+	}
+	
+	@Test(expected=Exception.class)
+	public void pegaFuncionarioComUidIncorreto() throws Exception {
+		GerenciadorDeFuncionarios gerenciador = new GerenciadorDeFuncionarios();
+		gerenciador.getFuncionario(123);
+	}
 }

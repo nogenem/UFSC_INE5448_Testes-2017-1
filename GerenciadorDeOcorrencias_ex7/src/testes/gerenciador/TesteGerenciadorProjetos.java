@@ -1,21 +1,20 @@
 package testes.gerenciador;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import main.gerenciador.GerenciadorDeProjetos;
-import main.model.Projeto;
 
 public class TesteGerenciadorProjetos {
 
 	@Test
 	public void cadastraNovoProjeto() {
 		GerenciadorDeProjetos gerenciador = new GerenciadorDeProjetos();
-		Projeto projeto = new Projeto("Projeto inicial");
-		boolean retorno = gerenciador.cadastraProjeto(projeto );
+		long uid = gerenciador.cadastraProjeto("Projeto inicial");
 		
-		assertTrue(retorno);
+		assertTrue(uid > 0);
 		assertEquals(1, gerenciador.getNumeroDeProjetos());
 	}
 

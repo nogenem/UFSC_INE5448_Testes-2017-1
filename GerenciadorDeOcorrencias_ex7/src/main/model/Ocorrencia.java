@@ -9,35 +9,24 @@ public class Ocorrencia {
 	private static long CURRENT_ID;
 	
 	private long uid;	
-	private Funcionario responsavel;
 	private Prioridade prioridade;
 	private Tipo tipo;
 	private String resumo;
 	private Status status;
+	private Funcionario responsavel;
 	
 	public Ocorrencia(Prioridade prioridade, Tipo tipo, String resumo) {
 		this.uid = ++CURRENT_ID;
-		this.responsavel = null;
 		this.prioridade = prioridade;
 		this.tipo = tipo;
 		this.resumo = resumo;
 		this.status = Status.ABERTA;
+		this.responsavel = null;
 	}
 	
 	// Getters e Setters
 	public long getUid() {
 		return this.uid;
-	}
-
-	public Funcionario getResponsavel() {
-		return responsavel;
-	}
-
-	public boolean setResponsavel(Funcionario responsavel) {
-		if(this.status != Status.ABERTA)
-			return false;
-		this.responsavel = responsavel;
-		return true;
 	}
 
 	public Prioridade getPrioridade() {
@@ -75,4 +64,14 @@ public class Ocorrencia {
 		this.status = status;
 	}
 	
+	public Funcionario getResponsavel() {
+		return responsavel;
+	}
+
+	public boolean setResponsavel(Funcionario responsavel) {
+		if(this.status != Status.ABERTA)
+			return false;
+		this.responsavel = responsavel;
+		return true;
+	}
 }
