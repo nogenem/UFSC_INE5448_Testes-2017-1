@@ -16,5 +16,14 @@ public class TesteControladorDeDados {
 		assertTrue(uidFunc > 0);
 		assertEquals(1, controlador.getNumeroDeFuncionarios());
 	}
+	
+	@Test
+	public void cadastraUmNovoProjeto() throws Exception {
+		ControladorDeDados controlador = new ControladorDeDados();
+		long uidProj = controlador.cadastraProjeto("Projeto teste");
+		
+		assertTrue(uidProj > 0);
+		assertEquals(1, controlador.getNumeroDeProjetos());
+	}
 
 }
