@@ -11,21 +11,21 @@ import main.model.Ocorrencia;
 
 public class TesteControladorDeDados {
 	
+	private final String resumoOcorrencia = "Bug na classe Avião.";
+	private final Ocorrencia.Prioridade prioridadeOcorrencia = Ocorrencia.Prioridade.ALTA;
+	private final Ocorrencia.Tipo tipoOcorrencia = Ocorrencia.Tipo.BUG;
+	
 	private ControladorDeDados controlador;
-	private long uidFunc;
-	private long uidProj;
 	
 	@Before
 	public void setup(){
 		this.controlador = new ControladorDeDados();
-		this.uidFunc = this.controlador.cadastraFuncionario("Fulano da Silva");
-		this.uidProj = this.controlador.cadastraProjeto("Projeto teste");
 	}
 	
 	// Cadastro de funcionario
 	@Test
 	public void cadastraUmNovoFuncionario() {
-		long uidFunc = controlador.cadastraFuncionario("Fulano Souza da Silva");
+		long uidFunc = this.cadastraFuncionarioValido();
 		
 		assertTrue(uidFunc > 0);
 		assertEquals(1, controlador.getNumeroDeFuncionarios());
@@ -35,7 +35,7 @@ public class TesteControladorDeDados {
 	// Cadastro de projeto
 	@Test
 	public void cadastraUmNovoProjeto() throws Exception {
-		long uidProj = controlador.cadastraProjeto("Projeto teste 2");
+		long uidProj = this.cadastraProjetoValido();
 		
 		assertTrue(uidProj > 0);
 		assertEquals(1, controlador.getNumeroDeProjetos());
@@ -45,8 +45,7 @@ public class TesteControladorDeDados {
 	// Cadastro de ocorrencia
 	@Test
 	public void cadastraUmaNovaOcorrencia() throws Exception {
-		long uidOcorrencia = controlador.cadastraOcorrencia("Bug na classe Avião.", 
-				Ocorrencia.Prioridade.ALTA, Ocorrencia.Tipo.BUG, uidFunc, uidProj);
+		long uidOcorrencia = this.cadastraOcorrenciaValida();
 		
 		assertTrue(uidOcorrencia > 0);
 		assertEquals(1, controlador.getNumeroDeOcorrenciasAbertas());
@@ -55,60 +54,79 @@ public class TesteControladorDeDados {
 	
 	@Test(expected=Exception.class)
 	public void cadastraOnzeOcorrenciasParaMesmoFuncionario() throws Exception {
-		controlador.cadastraOcorrencia("Bug na classe Avião.", 
-				Ocorrencia.Prioridade.ALTA, Ocorrencia.Tipo.BUG, uidFunc, uidProj);
-		controlador.cadastraOcorrencia("Bug na classe Avião.", 
-				Ocorrencia.Prioridade.ALTA, Ocorrencia.Tipo.BUG, uidFunc, uidProj);
-		controlador.cadastraOcorrencia("Bug na classe Avião.", 
-				Ocorrencia.Prioridade.ALTA, Ocorrencia.Tipo.BUG, uidFunc, uidProj);
-		controlador.cadastraOcorrencia("Bug na classe Avião.", 
-				Ocorrencia.Prioridade.ALTA, Ocorrencia.Tipo.BUG, uidFunc, uidProj);
-		controlador.cadastraOcorrencia("Bug na classe Avião.", 
-				Ocorrencia.Prioridade.ALTA, Ocorrencia.Tipo.BUG, uidFunc, uidProj);
-		controlador.cadastraOcorrencia("Bug na classe Avião.", 
-				Ocorrencia.Prioridade.ALTA, Ocorrencia.Tipo.BUG, uidFunc, uidProj);
-		controlador.cadastraOcorrencia("Bug na classe Avião.", 
-				Ocorrencia.Prioridade.ALTA, Ocorrencia.Tipo.BUG, uidFunc, uidProj);
-		controlador.cadastraOcorrencia("Bug na classe Avião.", 
-				Ocorrencia.Prioridade.ALTA, Ocorrencia.Tipo.BUG, uidFunc, uidProj);
-		controlador.cadastraOcorrencia("Bug na classe Avião.", 
-				Ocorrencia.Prioridade.ALTA, Ocorrencia.Tipo.BUG, uidFunc, uidProj);
-		controlador.cadastraOcorrencia("Bug na classe Avião.", 
-				Ocorrencia.Prioridade.ALTA, Ocorrencia.Tipo.BUG, uidFunc, uidProj);
-		controlador.cadastraOcorrencia("Bug na classe Avião.", 
-				Ocorrencia.Prioridade.ALTA, Ocorrencia.Tipo.BUG, uidFunc, uidProj);
+		long uidFunc = this.cadastraFuncionarioValido();
+		long uidProj = this.cadastraProjetoValido();
+		
+		controlador.cadastraOcorrencia(resumoOcorrencia, 
+				prioridadeOcorrencia, tipoOcorrencia, uidFunc, uidProj);
+		controlador.cadastraOcorrencia(resumoOcorrencia, 
+				prioridadeOcorrencia, tipoOcorrencia, uidFunc, uidProj);
+		controlador.cadastraOcorrencia(resumoOcorrencia, 
+				prioridadeOcorrencia, tipoOcorrencia, uidFunc, uidProj);
+		controlador.cadastraOcorrencia(resumoOcorrencia, 
+				prioridadeOcorrencia, tipoOcorrencia, uidFunc, uidProj);
+		controlador.cadastraOcorrencia(resumoOcorrencia, 
+				prioridadeOcorrencia, tipoOcorrencia, uidFunc, uidProj);
+		controlador.cadastraOcorrencia(resumoOcorrencia, 
+				prioridadeOcorrencia, tipoOcorrencia, uidFunc, uidProj);
+		controlador.cadastraOcorrencia(resumoOcorrencia, 
+				prioridadeOcorrencia, tipoOcorrencia, uidFunc, uidProj);
+		controlador.cadastraOcorrencia(resumoOcorrencia, 
+				prioridadeOcorrencia, tipoOcorrencia, uidFunc, uidProj);
+		controlador.cadastraOcorrencia(resumoOcorrencia, 
+				prioridadeOcorrencia, tipoOcorrencia, uidFunc, uidProj);
+		controlador.cadastraOcorrencia(resumoOcorrencia, 
+				prioridadeOcorrencia, tipoOcorrencia, uidFunc, uidProj);
+		controlador.cadastraOcorrencia(resumoOcorrencia, 
+				prioridadeOcorrencia, tipoOcorrencia, uidFunc, uidProj);
 	}
 	
 	@Test(expected=Exception.class)
 	public void cadastraNovaOcorrenciaComUidFuncErrado() throws Exception {
 		long uidFunc = 100;
-		
-		controlador.cadastraOcorrencia("Bug na classe Avião.", 
-				Ocorrencia.Prioridade.ALTA, Ocorrencia.Tipo.BUG, uidFunc, uidProj);
+		long uidProj = this.cadastraProjetoValido();
+
+		controlador.cadastraOcorrencia(resumoOcorrencia, 
+				prioridadeOcorrencia, tipoOcorrencia, uidFunc, uidProj);
 	}
 	
 	@Test(expected=Exception.class)
 	public void cadastraNovaOcorrenciaComUidProjErrado() throws Exception {
+		long uidFunc = this.cadastraFuncionarioValido();
 		long uidProj = 100;
 		
-		controlador.cadastraOcorrencia("Bug na classe Avião.", 
-				Ocorrencia.Prioridade.ALTA, Ocorrencia.Tipo.BUG, uidFunc, uidProj);
+		controlador.cadastraOcorrencia(resumoOcorrencia, 
+				prioridadeOcorrencia, tipoOcorrencia, uidFunc, uidProj);
 	}
 	
 	@Test
 	public void concluindoUmaOcorrencia() throws Exception {
-		long uidOcorrencia = controlador.cadastraOcorrencia("Bug na classe Avião.", 
-				Ocorrencia.Prioridade.ALTA, Ocorrencia.Tipo.BUG, uidFunc, uidProj);
+		long uidOcorrencia = this.cadastraOcorrenciaValida();
 		
 		controlador.concluirOcorrencia(uidOcorrencia);
 	}
 	
 	@Test(expected=Exception.class)
 	public void concluindoUmaOcorrenciaJaConcluida() throws Exception {
-		long uidOcorrencia = controlador.cadastraOcorrencia("Bug na classe Avião.", 
-				Ocorrencia.Prioridade.ALTA, Ocorrencia.Tipo.BUG, uidFunc, uidProj);
+		long uidOcorrencia = this.cadastraOcorrenciaValida();
 		
 		controlador.concluirOcorrencia(uidOcorrencia);
 		controlador.concluirOcorrencia(uidOcorrencia);
+	}
+	
+	// Métodos uteis
+	private long cadastraFuncionarioValido(){
+		return this.controlador.cadastraFuncionario("Fulano da Silva");
+	}
+	
+	private long cadastraProjetoValido(){
+		return this.controlador.cadastraProjeto("Projeto teste");
+	}
+	
+	private long cadastraOcorrenciaValida() throws Exception {
+		long uidFunc = this.cadastraFuncionarioValido();
+		long uidProj = this.cadastraProjetoValido();
+		return this.controlador.cadastraOcorrencia(resumoOcorrencia, prioridadeOcorrencia, 
+				tipoOcorrencia, uidFunc, uidProj);
 	}
 }
