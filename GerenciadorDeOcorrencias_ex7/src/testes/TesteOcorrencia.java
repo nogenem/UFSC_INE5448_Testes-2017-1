@@ -11,16 +11,16 @@ import main.model.Ocorrencia;
 
 public class TesteOcorrencia {
 
-	private final String resumo = "Bug na classe Avião.";
-	private final Ocorrencia.Prioridade prioridade = Ocorrencia.Prioridade.ALTA;
-	private final Ocorrencia.Tipo tipo = Ocorrencia.Tipo.BUG;
+	private final String resumoOcorrencia = "Bug na classe Avião.";
+	private final Ocorrencia.Prioridade prioridadeOcorrencia = Ocorrencia.Prioridade.ALTA;
+	private final Ocorrencia.Tipo tipoOcorrencia = Ocorrencia.Tipo.BUG;
 	
-	private Funcionario responsavel;
+	private Funcionario responsavelPelaOcorrencia;
 	
 	@Before
 	public void setup(){
 		Ocorrencia.zerarUID();
-		this.responsavel = new Funcionario("Fulano da Silva");
+		this.responsavelPelaOcorrencia = new Funcionario("Fulano da Silva");
 	}
 	
 	@Test
@@ -28,46 +28,46 @@ public class TesteOcorrencia {
 		Ocorrencia ocorrencia = this.criaOcorrenciaValida();
 
 		assertEquals(1, ocorrencia.getUid());
-		assertEquals(resumo, ocorrencia.getResumo());
-		assertEquals(prioridade, ocorrencia.getPrioridade());
-		assertEquals(tipo, ocorrencia.getTipo());
+		assertEquals(resumoOcorrencia, ocorrencia.getResumo());
+		assertEquals(prioridadeOcorrencia, ocorrencia.getPrioridade());
+		assertEquals(tipoOcorrencia, ocorrencia.getTipo());
 		assertEquals(Ocorrencia.Estado.ABERTA, ocorrencia.getEstado());
 		assertEquals(null, ocorrencia.getResponsavel());
 	}
 	
 	@Test
-	public void trocaResponsavelDeUmaOcorrencia() throws Exception {
+	public void atribuiResponsavelParaUmaOcorrencia() throws Exception {
 		Ocorrencia ocorrencia = this.criaOcorrenciaValida();
-		ocorrencia.setResponsavel(responsavel);
+		ocorrencia.setResponsavel(responsavelPelaOcorrencia);
 		
-		assertEquals(responsavel, ocorrencia.getResponsavel());
+		assertEquals(responsavelPelaOcorrencia, ocorrencia.getResponsavel());
 	}
 	
 	@Test(expected=Exception.class)
-	public void trocaResponsavelDeUmaOcorrenciaCompletada() throws Exception {
+	public void atribuiResponsavelParaUmaOcorrenciaCompletada() throws Exception {
 		Ocorrencia ocorrencia = this.criaOcorrenciaValida();
 		
 		ocorrencia.setEstado(Ocorrencia.Estado.COMPLETADA);
-		ocorrencia.setResponsavel(responsavel);
+		ocorrencia.setResponsavel(responsavelPelaOcorrencia);
 	}
 	
 	@Test
 	public void trocaPrioridadeDeUmaOcorrencia() throws Exception {
-		Ocorrencia ocorrencia = this.criaOcorrenciaValida();
-		Ocorrencia.Prioridade outraPrioridade = Ocorrencia.Prioridade.BAIXA;
+		Ocorrencia ocorrencia = this.criaOcorrenciaValida();//Iniciada como ALTA
+		Ocorrencia.Prioridade prioridadeBaixa = Ocorrencia.Prioridade.BAIXA;
 		
-		ocorrencia.setPrioridade(outraPrioridade);
+		ocorrencia.setPrioridade(prioridadeBaixa);
 		
-		assertEquals(outraPrioridade, ocorrencia.getPrioridade());
+		assertEquals(prioridadeBaixa, ocorrencia.getPrioridade());
 	}
 	
 	@Test(expected=Exception.class)
 	public void trocaPrioridadeDeUmaOcorrenciaCompletada() throws Exception {
-		Ocorrencia ocorrencia = this.criaOcorrenciaValida();
-		Ocorrencia.Prioridade outraPrioridade = Ocorrencia.Prioridade.BAIXA;
+		Ocorrencia ocorrencia = this.criaOcorrenciaValida();//Iniciada como ALTA
+		Ocorrencia.Prioridade prioridadeBaixa = Ocorrencia.Prioridade.BAIXA;
 		
 		ocorrencia.setEstado(Ocorrencia.Estado.COMPLETADA);
-		ocorrencia.setPrioridade(outraPrioridade);
+		ocorrencia.setPrioridade(prioridadeBaixa);
 	}
 	
 	@Test
@@ -94,6 +94,6 @@ public class TesteOcorrencia {
 
 	// Métodos uteis
 	private Ocorrencia criaOcorrenciaValida(){
-		return new Ocorrencia(resumo, prioridade, tipo);
+		return new Ocorrencia(resumoOcorrencia, prioridadeOcorrencia, tipoOcorrencia);
 	}
 }

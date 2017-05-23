@@ -17,34 +17,33 @@ public class TesteProjeto {
 	
 	@Test
 	public void criaNovoProjeto() {
-		String nome = "Projeto teste";
-		Projeto proj = new Projeto(nome);
+		Projeto projetoTeste = new Projeto("Projeto teste");
 		
-		assertEquals(1, proj.getUid());
-		assertEquals(nome, proj.getNome());
-		assertNotEquals(null, proj.getOcorrencias());
+		assertEquals(1, projetoTeste.getUid());
+		assertEquals("Projeto teste", projetoTeste.getNome());
+		assertEquals(0, projetoTeste.getOcorrencias().size());
 	}
 	
 	@Test
 	public void igualdadeDeProjetosIguais() throws Exception {
-		Projeto proj1 = new Projeto("Projeto teste 1");
+		Projeto projetoTeste = new Projeto("Projeto teste");
 		
-		assertEquals(proj1, proj1);
+		assertEquals(projetoTeste, projetoTeste);
 	}
 	
 	@Test
 	public void igualdadeDeProjetosNaoIguais() throws Exception {
-		Projeto proj1 = new Projeto("Projeto teste 1");
-		Projeto proj2 = new Projeto("Projeto teste 2");
+		Projeto projetoTeste1 = new Projeto("Projeto teste 1");
+		Projeto projetoTeste2 = new Projeto("Projeto teste 2");
 		
-		assertNotEquals(proj1, proj2);
+		assertNotEquals(projetoTeste1, projetoTeste2);
 	}
 	
 	@Test
 	public void igualdadeDeProjetosPassandoNull() throws Exception {
-		Projeto proj1 = new Projeto("Projeto teste 1");
+		Projeto projetoTeste = new Projeto("Projeto teste");
 		
-		assertNotEquals(proj1, null);
+		assertNotEquals(projetoTeste, null);
 	}
 
 }

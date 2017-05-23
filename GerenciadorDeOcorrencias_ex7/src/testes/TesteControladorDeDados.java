@@ -84,20 +84,20 @@ public class TesteControladorDeDados {
 	
 	@Test(expected=Exception.class)
 	public void cadastraNovaOcorrenciaComUidFuncErrado() throws Exception {
-		long uidFunc = 100;
+		long uidInvalidoDeFunc = 100;
 		long uidProj = this.cadastraProjetoValido();
 
 		controlador.cadastraOcorrencia(resumoOcorrencia, 
-				prioridadeOcorrencia, tipoOcorrencia, uidFunc, uidProj);
+				prioridadeOcorrencia, tipoOcorrencia, uidInvalidoDeFunc, uidProj);
 	}
 	
 	@Test(expected=Exception.class)
 	public void cadastraNovaOcorrenciaComUidProjErrado() throws Exception {
 		long uidFunc = this.cadastraFuncionarioValido();
-		long uidProj = 100;
+		long uidInvalidoDeProj = 100;
 		
 		controlador.cadastraOcorrencia(resumoOcorrencia, 
-				prioridadeOcorrencia, tipoOcorrencia, uidFunc, uidProj);
+				prioridadeOcorrencia, tipoOcorrencia, uidFunc, uidInvalidoDeProj);
 	}
 	
 	@Test
@@ -117,9 +117,9 @@ public class TesteControladorDeDados {
 	
 	@Test
 	public void procurarUmaOcorrenciaNaoCadastrada() throws Exception {
-		long uidOcorrencia = 100;
+		long uidInvalidoDeOcorrencia = 100;
 		
-		assertFalse(controlador.ocorrenciaEstaCadastrada(uidOcorrencia));
+		assertFalse(controlador.ocorrenciaEstaCadastrada(uidInvalidoDeOcorrencia));
 	}
 	
 	@Test

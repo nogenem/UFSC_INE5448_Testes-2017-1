@@ -17,11 +17,10 @@ public class TesteFuncionario {
 	
 	@Test
 	public void criaNovoFuncionario() {
-		String nome = "Fulano da Silva";
-		Funcionario func = new Funcionario(nome);
+		Funcionario fulano = new Funcionario("Fulano da Silva");
 		
-		assertEquals(1, func.getUid());
-		assertEquals(nome , func.getNome());
+		assertEquals(1, fulano.getUid());
+		assertEquals("Fulano da Silva", fulano.getNome());
 	}
 	
 	@Test
@@ -34,17 +33,16 @@ public class TesteFuncionario {
 	@Test
 	public void igudadeDeFuncionariosNaoIguais() throws Exception {
 		Funcionario fulano = new Funcionario("Fulano da Silva");
-		Funcionario joe = new Funcionario("Joe Doe");
+		Funcionario ciclano = new Funcionario("Ciclano de Souza");
 		
-		assertNotEquals(fulano, joe);
+		assertNotEquals(fulano, ciclano);
 	}
 	
 	@Test
 	public void igudadeDeFuncionariosPassandoNull() throws Exception {
 		Funcionario fulano = new Funcionario("Fulano da Silva");
-		Funcionario joe = null;
 		
-		assertNotEquals(fulano, joe);
+		assertNotEquals(fulano, null);
 	}
 
 }
