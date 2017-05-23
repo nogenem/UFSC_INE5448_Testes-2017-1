@@ -15,6 +15,7 @@ public class TesteProjeto {
 		
 		assertTrue(proj.getUid() > 0);
 		assertEquals(nome, proj.getNome());
+		assertNotEquals(null, proj.getOcorrencias());
 	}
 
 }
