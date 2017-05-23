@@ -1,19 +1,26 @@
 package testes;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import main.model.Projeto;
 
 public class TesteProjeto {
 
+	@Before
+	public void setup(){
+		Projeto.zerarUID();
+	}
+	
 	@Test
 	public void criaNovoProjeto() {
 		String nome = "Projeto teste";
 		Projeto proj = new Projeto(nome);
 		
-		assertTrue(proj.getUid() > 0);
+		assertEquals(1, proj.getUid());
 		assertEquals(nome, proj.getNome());
 		assertNotEquals(null, proj.getOcorrencias());
 	}

@@ -28,7 +28,7 @@ public class TesteControladorDeDados {
 	public void cadastraUmNovoFuncionario() {
 		long uidFunc = this.cadastraFuncionarioValido();
 		
-		assertTrue(uidFunc > 0);
+		assertEquals(1, uidFunc);
 		assertEquals(1, controlador.getNumeroDeFuncionarios());
 		assertTrue(controlador.funcionarioEstaCadastrado(uidFunc));
 	}
@@ -38,7 +38,7 @@ public class TesteControladorDeDados {
 	public void cadastraUmNovoProjeto() throws Exception {
 		long uidProj = this.cadastraProjetoValido();
 		
-		assertTrue(uidProj > 0);
+		assertEquals(1, uidProj);
 		assertEquals(1, controlador.getNumeroDeProjetos());
 		assertTrue(controlador.projetoEstaCadastrado(uidProj));
 	}
@@ -48,7 +48,7 @@ public class TesteControladorDeDados {
 	public void cadastraUmaNovaOcorrencia() throws Exception {
 		long uidOcorrencia = this.cadastraOcorrenciaValida();
 		
-		assertTrue(uidOcorrencia > 0);
+		assertEquals(1, uidOcorrencia);
 		assertEquals(1, controlador.getNumeroDeOcorrenciasAbertas());
 		assertTrue(controlador.ocorrenciaEstaAberta(uidOcorrencia));
 	}

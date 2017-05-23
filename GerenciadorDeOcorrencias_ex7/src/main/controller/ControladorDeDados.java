@@ -20,6 +20,10 @@ public class ControladorDeDados {
 		this.funcionarios = new HashMap<>();
 		this.projetos = new HashMap<>();
 		this.ocorrenciasAbertas = new HashMap<>();
+		
+		Funcionario.zerarUID();
+		Projeto.zerarUID();
+		Ocorrencia.zerarUID();
 	}
 	
 	// Funcionario

@@ -66,6 +66,10 @@ public class Ocorrencia {
 		this.responsavel = responsavel;
 	}
 	
+	public static void zerarUID(){
+		CURRENT_UID = 0;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Ocorrencia) {

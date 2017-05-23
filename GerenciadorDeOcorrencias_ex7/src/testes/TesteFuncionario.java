@@ -1,19 +1,26 @@
 package testes;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import main.model.Funcionario;
 
 public class TesteFuncionario {
 
+	@Before
+	public void setup(){
+		Funcionario.zerarUID();
+	}
+	
 	@Test
 	public void criaNovoFuncionario() {
 		String nome = "Fulano da Silva";
 		Funcionario func = new Funcionario(nome);
 		
-		assertTrue(func .getUid() > 0);
+		assertEquals(1, func.getUid());
 		assertEquals(nome , func.getNome());
 	}
 	
