@@ -3,18 +3,30 @@ package testes;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Before;
 import org.junit.Test;
 
+import main.model.Funcionario;
 import main.model.Ocorrencia;
 
 public class TesteOcorrencia {
 
+	private final String resumo = "Bug na classe Avião.";
+	private final Ocorrencia.Prioridade prioridade = Ocorrencia.Prioridade.ALTA;
+	private final Ocorrencia.Tipo tipo = Ocorrencia.Tipo.BUG;
+	
+	private Ocorrencia ocorrencia;
+	private Funcionario responsavel;
+	
+	@Before
+	public void setup(){
+		this.ocorrencia = new Ocorrencia(resumo, 
+				prioridade, tipo);
+		this.responsavel = new Funcionario("Fulano da Silva");
+	}
+	
 	@Test
 	public void criaNovaOcorrencia() {
-		String resumo = "Bug na classe Avião.";
-		Ocorrencia.Prioridade prioridade = Ocorrencia.Prioridade.ALTA;
-		Ocorrencia.Tipo tipo = Ocorrencia.Tipo.BUG;
-		
 		Ocorrencia ocorrencia = new Ocorrencia(resumo, 
 				prioridade, tipo);
 
@@ -24,6 +36,36 @@ public class TesteOcorrencia {
 		assertEquals(tipo, ocorrencia.getTipo());
 		assertEquals(Ocorrencia.Estado.ABERTA, ocorrencia.getEstado());
 		assertEquals(null, ocorrencia.getResponsavel());
+	}
+	
+	@Test
+	public void trocaResponsavelDeUmaOcorrencia() throws Exception {
+		ocorrencia.setResponsavel(responsavel);
+		
+		assertEquals(responsavel, ocorrencia.getResponsavel());
+	}
+	
+	@Test(expected=Exception.class)
+	public void trocaResponsavelDeUmaOcorrenciaCompletada() throws Exception {
+		ocorrencia.setEstado(Ocorrencia.Estado.COMPLETADA);
+		ocorrencia.setResponsavel(responsavel);
+	}
+	
+	@Test
+	public void trocaPrioridadeDeUmaOcorrencia() throws Exception {
+		Ocorrencia.Prioridade outraPrioridade = Ocorrencia.Prioridade.BAIXA;
+		
+		ocorrencia.setPrioridade(outraPrioridade);
+		
+		assertEquals(outraPrioridade, ocorrencia.getPrioridade());
+	}
+	
+	@Test(expected=Exception.class)
+	public void trocaPrioridadeDeUmaOcorrenciaCompletada() throws Exception {
+		Ocorrencia.Prioridade outraPrioridade = Ocorrencia.Prioridade.BAIXA;
+		
+		ocorrencia.setEstado(Ocorrencia.Estado.COMPLETADA);
+		ocorrencia.setPrioridade(outraPrioridade);
 	}
 
 }
