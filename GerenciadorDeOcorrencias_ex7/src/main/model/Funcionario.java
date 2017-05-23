@@ -23,4 +23,16 @@ public class Funcionario {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null || getClass() != obj.getClass())
+			return false;
+		Funcionario other = (Funcionario) obj;
+		return uid == other.uid;
+	}
+	
+	
 }
