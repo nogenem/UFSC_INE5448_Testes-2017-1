@@ -1,7 +1,6 @@
 package testes;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
@@ -16,6 +15,29 @@ public class TesteFuncionario {
 		
 		assertTrue(func .getUid() > 0);
 		assertEquals(nome , func.getNome());
+	}
+	
+	@Test
+	public void igudadeDeFuncionariosIguais() throws Exception {
+		Funcionario fulano = new Funcionario("Fulano da Silva");
+		
+		assertEquals(fulano, fulano);
+	}
+	
+	@Test
+	public void igudadeDeFuncionariosNaoIguais() throws Exception {
+		Funcionario fulano = new Funcionario("Fulano da Silva");
+		Funcionario joe = new Funcionario("Joe Doe");
+		
+		assertNotEquals(fulano, joe);
+	}
+	
+	@Test
+	public void igudadeDeFuncionariosPassandoNull() throws Exception {
+		Funcionario fulano = new Funcionario("Fulano da Silva");
+		Funcionario joe = null;
+		
+		assertNotEquals(fulano, joe);
 	}
 
 }

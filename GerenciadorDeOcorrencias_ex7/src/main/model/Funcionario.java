@@ -19,20 +19,14 @@ public class Funcionario {
 	public String getNome() {
 		return nome;
 	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
 	
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null || getClass() != obj.getClass())
-			return false;
-		Funcionario other = (Funcionario) obj;
-		return uid == other.uid;
+		if (obj instanceof Funcionario) {
+			Funcionario func = (Funcionario) obj;
+			return this.uid == func.uid;
+		}
+		return super.equals(obj);
 	}
-	
 	
 }
