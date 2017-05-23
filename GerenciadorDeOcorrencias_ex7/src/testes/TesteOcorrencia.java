@@ -1,6 +1,7 @@
 package testes;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -66,6 +67,28 @@ public class TesteOcorrencia {
 		
 		ocorrencia.setEstado(Ocorrencia.Estado.COMPLETADA);
 		ocorrencia.setPrioridade(outraPrioridade);
+	}
+	
+	@Test
+	public void igualdadeDeOcorrenciasIguais() throws Exception {
+		Ocorrencia ocorrencia1 = new Ocorrencia(resumo, prioridade, tipo);
+		
+		assertEquals(ocorrencia1, ocorrencia1);
+	}
+	
+	@Test
+	public void igualdadeDeProjetosNaoIguais() throws Exception {
+		Ocorrencia ocorrencia1 = new Ocorrencia(resumo, prioridade, tipo);
+		Ocorrencia ocorrencia2 = new Ocorrencia(resumo, prioridade, tipo);
+		
+		assertNotEquals(ocorrencia1, ocorrencia2);
+	}
+	
+	@Test
+	public void igualdadeDeProjetosPassandoNull() throws Exception {
+		Ocorrencia ocorrencia1 = new Ocorrencia(resumo, prioridade, tipo);
+		
+		assertNotEquals(ocorrencia1, null);
 	}
 
 }

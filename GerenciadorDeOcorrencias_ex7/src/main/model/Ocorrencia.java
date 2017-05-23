@@ -32,10 +32,6 @@ public class Ocorrencia {
 		return resumo;
 	}
 
-	public void setResumo(String resumo) {
-		this.resumo = resumo;
-	}
-
 	public Prioridade getPrioridade() {
 		return prioridade;
 	}
@@ -49,10 +45,6 @@ public class Ocorrencia {
 
 	public Tipo getTipo() {
 		return tipo;
-	}
-
-	public void setTipo(Tipo tipo) {
-		this.tipo = tipo;
 	}
 
 	public Estado getEstado() {
@@ -76,12 +68,11 @@ public class Ocorrencia {
 	
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null || getClass() != obj.getClass())
-			return false;
-		Ocorrencia other = (Ocorrencia) obj;
-		return uid == other.uid;
+		if (obj instanceof Ocorrencia) {
+			Ocorrencia ocorrencia = (Ocorrencia) obj;
+			return this.uid == ocorrencia.uid;
+		}
+		return super.equals(obj);
 	}
 	
 }
