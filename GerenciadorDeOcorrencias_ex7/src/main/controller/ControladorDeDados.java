@@ -112,6 +112,16 @@ public class ControladorDeDados {
 		
 		throw new Exception("Ocorrencia com uid = " +uidOcorrencia+ " não esta cadastrada!");
 	}
+	
+	public void concluirOcorrencia(long uidOcorrencia) throws Exception {
+		Ocorrencia ocorrencia = this.getOcorrencia(uidOcorrencia);
+		
+		if(ocorrencia.getEstado() != Ocorrencia.Estado.ABERTA)
+			throw new Exception("Tentativa de concluir uma ocorrencia com uid = " +uidOcorrencia+ 
+					" que ja esta concluida!");
+		ocorrencia.setEstado(Ocorrencia.Estado.COMPLETADA);
+		this.ocorrenciasAbertas.remove(uidOcorrencia);
+	}
 
 	private boolean funcionarioPodeSerReponsavelPorMaisOcorrencias(Funcionario responsavel) {
 		int value = this.ocorrenciasAbertas.values().stream().reduce(0, (sum, ocorrencia) -> { 

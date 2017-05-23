@@ -96,4 +96,28 @@ public class TesteControladorDeDados {
 				Ocorrencia.Prioridade.ALTA, Ocorrencia.Tipo.BUG, uidFunc, uidProj);
 	}
 	
+	@Test
+	public void concluindoUmaOcorrencia() throws Exception {
+		ControladorDeDados controlador = new ControladorDeDados();
+		long uidFunc = controlador.cadastraFuncionario("Fulano da Silva");
+		long uidProj = controlador.cadastraProjeto("Projeto teste");
+		
+		long uidOcorrencia = controlador.cadastraOcorrencia("Bug na classe Avião.", 
+				Ocorrencia.Prioridade.ALTA, Ocorrencia.Tipo.BUG, uidFunc, uidProj);
+		
+		controlador.concluirOcorrencia(uidOcorrencia);
+	}
+	
+	@Test(expected=Exception.class)
+	public void concluindoUmaOcorrenciaJaConcluida() throws Exception {
+		ControladorDeDados controlador = new ControladorDeDados();
+		long uidFunc = controlador.cadastraFuncionario("Fulano da Silva");
+		long uidProj = controlador.cadastraProjeto("Projeto teste");
+		
+		long uidOcorrencia = controlador.cadastraOcorrencia("Bug na classe Avião.", 
+				Ocorrencia.Prioridade.ALTA, Ocorrencia.Tipo.BUG, uidFunc, uidProj);
+		
+		controlador.concluirOcorrencia(uidOcorrencia);
+		controlador.concluirOcorrencia(uidOcorrencia);
+	}
 }
