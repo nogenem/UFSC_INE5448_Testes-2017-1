@@ -1,7 +1,9 @@
 package testes;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import main.controller.ControladorDeDados;
@@ -9,11 +11,21 @@ import main.model.Ocorrencia;
 
 public class TesteControladorDeDados {
 	
+	private ControladorDeDados controlador;
+	private long uidFunc;
+	private long uidProj;
+	
+	@Before
+	public void setup(){
+		this.controlador = new ControladorDeDados();
+		this.uidFunc = this.controlador.cadastraFuncionario("Fulano da Silva");
+		this.uidProj = this.controlador.cadastraProjeto("Projeto teste");
+	}
+	
 	// Cadastro de funcionario
 	@Test
 	public void cadastraUmNovoFuncionario() {
-		ControladorDeDados controlador = new ControladorDeDados();
-		long uidFunc = controlador.cadastraFuncionario("Fulano da Silva");
+		long uidFunc = controlador.cadastraFuncionario("Fulano Souza da Silva");
 		
 		assertTrue(uidFunc > 0);
 		assertEquals(1, controlador.getNumeroDeFuncionarios());
@@ -23,8 +35,7 @@ public class TesteControladorDeDados {
 	// Cadastro de projeto
 	@Test
 	public void cadastraUmNovoProjeto() throws Exception {
-		ControladorDeDados controlador = new ControladorDeDados();
-		long uidProj = controlador.cadastraProjeto("Projeto teste");
+		long uidProj = controlador.cadastraProjeto("Projeto teste 2");
 		
 		assertTrue(uidProj > 0);
 		assertEquals(1, controlador.getNumeroDeProjetos());
@@ -34,10 +45,6 @@ public class TesteControladorDeDados {
 	// Cadastro de ocorrencia
 	@Test
 	public void cadastraUmaNovaOcorrencia() throws Exception {
-		ControladorDeDados controlador = new ControladorDeDados();
-		long uidFunc = controlador.cadastraFuncionario("Fulano da Silva");
-		long uidProj = controlador.cadastraProjeto("Projeto teste");
-		
 		long uidOcorrencia = controlador.cadastraOcorrencia("Bug na classe Avião.", 
 				Ocorrencia.Prioridade.ALTA, Ocorrencia.Tipo.BUG, uidFunc, uidProj);
 		
@@ -48,10 +55,6 @@ public class TesteControladorDeDados {
 	
 	@Test(expected=Exception.class)
 	public void cadastraOnzeOcorrenciasParaMesmoFuncionario() throws Exception {
-		ControladorDeDados controlador = new ControladorDeDados();
-		long uidFunc = controlador.cadastraFuncionario("Fulano da Silva");
-		long uidProj = controlador.cadastraProjeto("Projeto teste");
-		
 		controlador.cadastraOcorrencia("Bug na classe Avião.", 
 				Ocorrencia.Prioridade.ALTA, Ocorrencia.Tipo.BUG, uidFunc, uidProj);
 		controlador.cadastraOcorrencia("Bug na classe Avião.", 
@@ -78,9 +81,7 @@ public class TesteControladorDeDados {
 	
 	@Test(expected=Exception.class)
 	public void cadastraNovaOcorrenciaComUidFuncErrado() throws Exception {
-		ControladorDeDados controlador = new ControladorDeDados();
 		long uidFunc = 100;
-		long uidProj = controlador.cadastraProjeto("Projeto teste");
 		
 		controlador.cadastraOcorrencia("Bug na classe Avião.", 
 				Ocorrencia.Prioridade.ALTA, Ocorrencia.Tipo.BUG, uidFunc, uidProj);
@@ -88,8 +89,6 @@ public class TesteControladorDeDados {
 	
 	@Test(expected=Exception.class)
 	public void cadastraNovaOcorrenciaComUidProjErrado() throws Exception {
-		ControladorDeDados controlador = new ControladorDeDados();
-		long uidFunc = controlador.cadastraFuncionario("Fulano da Silva");
 		long uidProj = 100;
 		
 		controlador.cadastraOcorrencia("Bug na classe Avião.", 
@@ -98,10 +97,6 @@ public class TesteControladorDeDados {
 	
 	@Test
 	public void concluindoUmaOcorrencia() throws Exception {
-		ControladorDeDados controlador = new ControladorDeDados();
-		long uidFunc = controlador.cadastraFuncionario("Fulano da Silva");
-		long uidProj = controlador.cadastraProjeto("Projeto teste");
-		
 		long uidOcorrencia = controlador.cadastraOcorrencia("Bug na classe Avião.", 
 				Ocorrencia.Prioridade.ALTA, Ocorrencia.Tipo.BUG, uidFunc, uidProj);
 		
@@ -110,10 +105,6 @@ public class TesteControladorDeDados {
 	
 	@Test(expected=Exception.class)
 	public void concluindoUmaOcorrenciaJaConcluida() throws Exception {
-		ControladorDeDados controlador = new ControladorDeDados();
-		long uidFunc = controlador.cadastraFuncionario("Fulano da Silva");
-		long uidProj = controlador.cadastraProjeto("Projeto teste");
-		
 		long uidOcorrencia = controlador.cadastraOcorrencia("Bug na classe Avião.", 
 				Ocorrencia.Prioridade.ALTA, Ocorrencia.Tipo.BUG, uidFunc, uidProj);
 		
