@@ -1,6 +1,7 @@
 package testes;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -112,6 +113,20 @@ public class TesteControladorDeDados {
 		
 		controlador.concluirOcorrencia(uidOcorrencia);
 		controlador.concluirOcorrencia(uidOcorrencia);
+	}
+	
+	@Test
+	public void procurarUmaOcorrenciaNaoCadastrada() throws Exception {
+		long uidOcorrencia = 100;
+		
+		assertFalse(controlador.ocorrenciaEstaCadastrada(uidOcorrencia));
+	}
+	
+	@Test
+	public void procurarUmaOcorrenciaCadastrada() throws Exception {
+		long uidOcorrencia = this.cadastraOcorrenciaValida();
+		
+		assertTrue(controlador.ocorrenciaEstaCadastrada(uidOcorrencia));
 	}
 	
 	// Métodos uteis
