@@ -25,10 +25,6 @@ public class Projeto {
 		return nome;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
 	public Set<Ocorrencia> getOcorrencias() {
 		return ocorrencias;
 	}
@@ -39,12 +35,11 @@ public class Projeto {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null || getClass() != obj.getClass())
-			return false;
-		Projeto other = (Projeto) obj;
-		return uid == other.uid;
+		if (obj instanceof Projeto) {
+			Projeto proj = (Projeto) obj;
+			return this.uid == proj.uid;
+		}
+		return super.equals(obj);
 	}
 	
 }
