@@ -157,6 +157,15 @@ public class TesteControladorDeDados {
 		assertTrue(controlador.ocorrenciaEstaCadastrada(uidOcorrencia));
 	}
 	
+	@Test
+	public void procurarSegundaOcorrenciaCadastradaECompletada() throws Exception {
+		this.cadastraOcorrenciaValida();
+		long uidOcorrencia = this.cadastraOcorrenciaValida();
+		controlador.concluirOcorrencia(uidOcorrencia);
+		
+		assertTrue(controlador.ocorrenciaEstaCadastrada(uidOcorrencia));
+	}
+	
 	// Métodos uteis
 	private long cadastraFuncionarioValido(){
 		return this.controlador.cadastraFuncionario("Fulano da Silva");

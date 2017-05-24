@@ -1,7 +1,6 @@
 package testes;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -91,7 +90,21 @@ public class TesteOcorrencia {
 		
 		assertNotEquals(ocorrencia, null);
 	}
-
+	
+	@Test
+	public void testeParaAumentarCoberturaDoTeste() throws Exception {
+		//https://stackoverflow.com/questions/4512358/emma-coverage-on-enum-types
+		
+		assertEquals(3, Ocorrencia.Prioridade.values().length);
+		assertEquals(Ocorrencia.Prioridade.BAIXA, Ocorrencia.Prioridade.valueOf("BAIXA"));
+		
+		assertEquals(3, Ocorrencia.Tipo.values().length);
+		assertEquals(Ocorrencia.Tipo.BUG, Ocorrencia.Tipo.valueOf("BUG"));
+		
+		assertEquals(2, Ocorrencia.Estado.values().length);
+		assertEquals(Ocorrencia.Estado.COMPLETADA, Ocorrencia.Estado.valueOf("COMPLETADA"));
+	}
+	
 	// Métodos uteis
 	private Ocorrencia criaOcorrenciaValida(){
 		return new Ocorrencia(resumoOcorrencia, prioridadeOcorrencia, tipoOcorrencia);
