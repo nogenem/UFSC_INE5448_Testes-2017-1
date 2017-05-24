@@ -34,15 +34,14 @@ public class Projeto {
 	public void addOcorrencia(Ocorrencia ocorrencia) throws Exception {
 		boolean retorno = this.getOcorrencias().add(ocorrencia);
 		if(!retorno)
-			throw new Exception("Ocorrencia com uid = " +ocorrencia.getUid()+ 
-					" ja faz parte do projeto com uid = " +this.uid+ "!");
+			throw new Exception("Ocorrencia " +ocorrencia+ " ja faz parte do projeto " +this+ "!");
 		
 		//Funcionários responsáveis por ocorrências pertencentes a um projeto
 		//devem ser participantes deste projeto
 		Funcionario responsavel = ocorrencia.getResponsavel();
 		if(responsavel == null)
-			throw new Exception("Tentativa de adicionar uma ocorrencia com uid = " +ocorrencia.getUid()+ 
-					" ao projeto com uid = " +this.uid+ " sem que a ocorrencia possua um responsavel!");
+			throw new Exception("Tentativa de adicionar ocorrencia " +ocorrencia+ " ao projeto " +this+ 
+					" sem que a ocorrencia possua um responsavel!");
 		if(!this.getParticipantes().contains(responsavel))
 			this.addParticipante(responsavel);
 	}
@@ -58,8 +57,7 @@ public class Projeto {
 	public void addParticipante(Funcionario participante) throws Exception {
 		boolean retorno = this.getParticipantes().add(participante);
 		if(!retorno)
-			throw new Exception("Funcionario com uid = " +participante.getUid()+ 
-					" ja participa do projeto com uid = " +this.uid+ "!");
+			throw new Exception("Funcionario " +participante+ " ja participa do projeto " +this+ "!");
 	}
 	
 	public int getNumeroDeParticipantes(){
@@ -79,4 +77,8 @@ public class Projeto {
 		return super.equals(obj);
 	}
 	
+	@Override
+	public String toString(){
+		return "{"+uid+", "+nome+"}";
+	}
 }

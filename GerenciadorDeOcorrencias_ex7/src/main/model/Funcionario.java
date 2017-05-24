@@ -33,4 +33,8 @@ public class Funcionario {
 		return super.equals(obj);
 	}
 	
+	@Override
+	public String toString(){
+		return "{"+uid+", "+nome+"}";
+	}
 }

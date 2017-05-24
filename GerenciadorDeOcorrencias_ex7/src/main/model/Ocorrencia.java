@@ -38,7 +38,7 @@ public class Ocorrencia {
 
 	public void setPrioridade(Prioridade prioridade) throws Exception {
 		if(this.estado != Estado.ABERTA)
-			throw new Exception("Tentativa de modificar a prioridade da ocorrencia com uid = " +this.uid+ 
+			throw new Exception("Tentativa de modificar a prioridade da ocorrencia " +this+ 
 					" enquanto a mesma não esta aberta!");
 		this.prioridade = prioridade;
 	}
@@ -61,7 +61,7 @@ public class Ocorrencia {
 
 	public void setResponsavel(Funcionario responsavel) throws Exception {
 		if(this.estado != Estado.ABERTA)
-			throw new Exception("Tentativa de modificar o responsavel da ocorrencia com uid = " +this.uid+ 
+			throw new Exception("Tentativa de modificar o responsavel da ocorrencia " +this+ 
 					" enquanto a mesma não esta aberta!");
 		this.responsavel = responsavel;
 	}
@@ -79,4 +79,8 @@ public class Ocorrencia {
 		return super.equals(obj);
 	}
 	
+	@Override
+	public String toString(){
+		return "{"+uid+", "+resumo+"}";
+	}
 }

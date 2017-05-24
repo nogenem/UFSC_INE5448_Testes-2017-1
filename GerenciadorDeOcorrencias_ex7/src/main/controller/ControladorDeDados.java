@@ -75,8 +75,7 @@ public class ControladorDeDados {
 		Projeto projeto = this.getProjeto(uidProj);
 		
 		if(!funcionarioPodeSerReponsavelPorMaisOcorrencias(responsavel))
-			throw new Exception("Funcionario com uid = " +uidFunc+ 
-					" não pode ser responsavel por mais ocorrencias!");
+			throw new Exception("Funcionario " +responsavel+ " não pode ser responsavel por mais ocorrencias!");
 		
 		Ocorrencia ocorrencia = new Ocorrencia(resumo, 
 				prioridade, tipo);
@@ -121,8 +120,7 @@ public class ControladorDeDados {
 		Ocorrencia ocorrencia = this.getOcorrencia(uidOcorrencia);
 		
 		if(ocorrencia.getEstado() != Ocorrencia.Estado.ABERTA)
-			throw new Exception("Tentativa de concluir uma ocorrencia com uid = " +uidOcorrencia+ 
-					" que ja esta concluida!");
+			throw new Exception("Tentativa de concluir a ocorrencia " +ocorrencia+ " que ja esta concluida!");
 		ocorrencia.setEstado(Ocorrencia.Estado.COMPLETADA);
 		this.ocorrenciasAbertas.remove(uidOcorrencia);
 	}
