@@ -126,10 +126,12 @@ public class ControladorDeDados {
 	}
 
 	private boolean funcionarioPodeSerReponsavelPorMaisOcorrencias(Funcionario responsavel) {
-		int value = this.ocorrenciasAbertas.values().stream().reduce(0, (sum, ocorrencia) -> { 
-			return (ocorrencia.getResponsavel().equals(responsavel)) ? sum + 1 : sum;
-		}, (sum1, sum2) -> sum1 + sum2);
-		return value < LIMITE_OCORRENCIAS_POR_FUNCIONARIO;
+		int sum = 0;
+		for(Ocorrencia ocorrencia : this.ocorrenciasAbertas.values()){
+			if(ocorrencia.getResponsavel().equals(responsavel))
+				sum++;
+		}
+		return sum < LIMITE_OCORRENCIAS_POR_FUNCIONARIO;
 	}
 
 }
