@@ -3,6 +3,8 @@ package main.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import main.exception.ProjetoException;
+
 public class Projeto {
 	
 	private static long CURRENT_UID;
@@ -32,15 +34,15 @@ public class Projeto {
 	}
 	
 	public void addOcorrencia(Ocorrencia ocorrencia) throws Exception {
-		boolean retorno = this.getOcorrencias().add(ocorrencia);
-		if(!retorno)
-			throw new Exception("Ocorrencia " +ocorrencia+ " ja faz parte do projeto " +this+ "!");
+		boolean ocorrenciaAdicionada = this.getOcorrencias().add(ocorrencia);
+		if(!ocorrenciaAdicionada)
+			throw new ProjetoException("Ocorrencia " +ocorrencia+ " ja faz parte do projeto " +this+ "!");
 		
 		//Funcionários responsáveis por ocorrências pertencentes a um projeto
 		//devem ser participantes deste projeto
 		Funcionario responsavel = ocorrencia.getResponsavel();
 		if(responsavel == null)
-			throw new Exception("Tentativa de adicionar ocorrencia " +ocorrencia+ " ao projeto " +this+ 
+			throw new ProjetoException("Tentativa de adicionar ocorrencia " +ocorrencia+ " ao projeto " +this+ 
 					" sem que a ocorrencia possua um responsavel!");
 		if(!this.getParticipantes().contains(responsavel))
 			this.addParticipante(responsavel);
@@ -55,9 +57,9 @@ public class Projeto {
 	}
 	
 	public void addParticipante(Funcionario participante) throws Exception {
-		boolean retorno = this.getParticipantes().add(participante);
-		if(!retorno)
-			throw new Exception("Funcionario " +participante+ " ja participa do projeto " +this+ "!");
+		boolean participanteAdicionado = this.getParticipantes().add(participante);
+		if(!participanteAdicionado)
+			throw new ProjetoException("Funcionario " +participante+ " ja participa do projeto " +this+ "!");
 	}
 	
 	public int getNumeroDeParticipantes(){

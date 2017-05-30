@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import main.exception.ProjetoException;
 import main.model.Funcionario;
 import main.model.Ocorrencia;
 import main.model.Projeto;
@@ -34,6 +35,7 @@ public class TesteProjeto {
 		projetoTeste.addOcorrencia(ocorrencia);
 		
 		assertEquals(1, projetoTeste.getNumeroDeOcorrencias());
+		assertEquals(1, projetoTeste.getNumeroDeParticipantes());
 	}
 	
 	@Test
@@ -47,7 +49,7 @@ public class TesteProjeto {
 		assertEquals(1, projetoTeste.getNumeroDeOcorrencias());
 	}
 	
-	@Test(expected=Exception.class)
+	@Test(expected=ProjetoException.class)
 	public void adicionaUmaOcorrenciaAoProjetoSemResponsavel() throws Exception {
 		Projeto projetoTeste = new Projeto("Projeto teste");
 		Ocorrencia ocorrencia = this.criaNovaOcorrenciaValida();
@@ -70,7 +72,7 @@ public class TesteProjeto {
 		assertEquals(2, projetoTeste.getNumeroDeOcorrencias());
 	}
 	
-	@Test(expected=Exception.class)
+	@Test(expected=ProjetoException.class)
 	public void adicionaMesmaOcorrenciaAoProjeto() throws Exception {
 		Projeto projetoTeste = new Projeto("Projeto teste");
 		Ocorrencia ocorrencia = this.criaNovaOcorrenciaValida();
@@ -101,7 +103,7 @@ public class TesteProjeto {
 		assertEquals(2, projetoTeste.getNumeroDeParticipantes());
 	}
 	
-	@Test(expected=Exception.class)
+	@Test(expected=ProjetoException.class)
 	public void adicionaMesmoParticipanteAoProjeto() throws Exception {
 		Projeto projetoTeste = new Projeto("Projeto teste");
 		Funcionario funcionario = this.criaNovoFuncionarioValido();
@@ -134,11 +136,10 @@ public class TesteProjeto {
 	
 	//Métodos uteis
 	public Ocorrencia criaNovaOcorrenciaValida() throws Exception {
-		Ocorrencia ocorrencia = new Ocorrencia("Bug na classe Avião.", 
-				Ocorrencia.Prioridade.ALTA, Ocorrencia.Tipo.BUG);
 		Funcionario responsavel = this.criaNovoFuncionarioValido();
+		Ocorrencia ocorrencia = new Ocorrencia("Bug na classe Avião.", 
+				Ocorrencia.Prioridade.ALTA, Ocorrencia.Tipo.BUG, responsavel);
 
-		ocorrencia.setResponsavel(responsavel);
 		return ocorrencia;
 	}
 	

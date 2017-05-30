@@ -1,5 +1,7 @@
 package main.model;
 
+import main.exception.OcorrenciaException;
+
 public class Ocorrencia {
 	
 	public enum Prioridade { ALTA, MEDIA, BAIXA };
@@ -15,13 +17,13 @@ public class Ocorrencia {
 	private Estado estado;
 	private Funcionario responsavel;
 	
-	public Ocorrencia(String resumo, Prioridade prioridade, Tipo tipo) {
+	public Ocorrencia(String resumo, Prioridade prioridade, Tipo tipo, Funcionario responsavel) {
 		this.uid = ++CURRENT_UID;
 		this.resumo = resumo;
 		this.prioridade = prioridade;
 		this.tipo = tipo;
 		this.estado = Estado.ABERTA;
-		this.responsavel = null;
+		this.responsavel = responsavel;
 	}
 
 	public long getUid() {
@@ -36,9 +38,9 @@ public class Ocorrencia {
 		return prioridade;
 	}
 
-	public void setPrioridade(Prioridade prioridade) throws Exception {
+	public void setPrioridade(Prioridade prioridade) throws OcorrenciaException {
 		if(this.estado != Estado.ABERTA)
-			throw new Exception("Tentativa de modificar a prioridade da ocorrencia " +this+ 
+			throw new OcorrenciaException("Tentativa de modificar a prioridade da ocorrencia " +this+ 
 					" enquanto a mesma não esta aberta!");
 		this.prioridade = prioridade;
 	}
@@ -59,9 +61,9 @@ public class Ocorrencia {
 		return responsavel;
 	}
 
-	public void setResponsavel(Funcionario responsavel) throws Exception {
+	public void setResponsavel(Funcionario responsavel) throws OcorrenciaException {
 		if(this.estado != Estado.ABERTA)
-			throw new Exception("Tentativa de modificar o responsavel da ocorrencia " +this+ 
+			throw new OcorrenciaException("Tentativa de modificar o responsavel da ocorrencia " +this+ 
 					" enquanto a mesma não esta aberta!");
 		this.responsavel = responsavel;
 	}

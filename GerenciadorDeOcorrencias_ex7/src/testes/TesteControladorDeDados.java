@@ -1,12 +1,17 @@
 package testes;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import main.controller.ControladorDeDados;
+import main.exception.ControladorDeDadosException;
+import main.model.Funcionario;
 import main.model.Ocorrencia;
+import main.model.Projeto;
 
 public class TesteControladorDeDados {
 	
@@ -19,6 +24,9 @@ public class TesteControladorDeDados {
 	@Before
 	public void setup(){
 		this.controlador = new ControladorDeDados();
+		Funcionario.zerarUID();
+		Projeto.zerarUID();
+		Ocorrencia.zerarUID();
 	}
 	
 	// Cadastro de funcionario
@@ -72,16 +80,35 @@ public class TesteControladorDeDados {
 	}
 	
 	@Test
-	public void cadastraDuasNovasOcorrencias() throws Exception {
-		long uidOcorrencia1 = this.cadastraOcorrenciaValida();
-		long uidOcorrencia2 = this.cadastraOcorrenciaValida();
+	public void cadastraDezOcorrenciasParaMesmoFuncionario() throws Exception {
+		long uidFunc = this.cadastraFuncionarioValido();
+		long uidProj = this.cadastraProjetoValido();
 		
-		assertEquals(2, controlador.getNumeroDeOcorrenciasAbertas());
-		assertTrue(controlador.ocorrenciaEstaAberta(uidOcorrencia1));
-		assertTrue(controlador.ocorrenciaEstaAberta(uidOcorrencia2));
+		controlador.cadastraOcorrencia(resumoOcorrencia, 
+				prioridadeOcorrencia, tipoOcorrencia, uidFunc, uidProj);
+		controlador.cadastraOcorrencia(resumoOcorrencia, 
+				prioridadeOcorrencia, tipoOcorrencia, uidFunc, uidProj);
+		controlador.cadastraOcorrencia(resumoOcorrencia, 
+				prioridadeOcorrencia, tipoOcorrencia, uidFunc, uidProj);
+		controlador.cadastraOcorrencia(resumoOcorrencia, 
+				prioridadeOcorrencia, tipoOcorrencia, uidFunc, uidProj);
+		controlador.cadastraOcorrencia(resumoOcorrencia, 
+				prioridadeOcorrencia, tipoOcorrencia, uidFunc, uidProj);
+		controlador.cadastraOcorrencia(resumoOcorrencia, 
+				prioridadeOcorrencia, tipoOcorrencia, uidFunc, uidProj);
+		controlador.cadastraOcorrencia(resumoOcorrencia, 
+				prioridadeOcorrencia, tipoOcorrencia, uidFunc, uidProj);
+		controlador.cadastraOcorrencia(resumoOcorrencia, 
+				prioridadeOcorrencia, tipoOcorrencia, uidFunc, uidProj);
+		controlador.cadastraOcorrencia(resumoOcorrencia, 
+				prioridadeOcorrencia, tipoOcorrencia, uidFunc, uidProj);
+		controlador.cadastraOcorrencia(resumoOcorrencia, 
+				prioridadeOcorrencia, tipoOcorrencia, uidFunc, uidProj);
+		
+		assertEquals(10, controlador.getNumeroDeOcorrenciasAbertas());
 	}
 	
-	@Test(expected=Exception.class)
+	@Test(expected=ControladorDeDadosException.class)
 	public void cadastraOnzeOcorrenciasParaMesmoFuncionario() throws Exception {
 		long uidFunc = this.cadastraFuncionarioValido();
 		long uidProj = this.cadastraProjetoValido();
@@ -110,8 +137,8 @@ public class TesteControladorDeDados {
 				prioridadeOcorrencia, tipoOcorrencia, uidFunc, uidProj);
 	}
 	
-	@Test(expected=Exception.class)
-	public void cadastraNovaOcorrenciaComUidFuncErrado() throws Exception {
+	@Test(expected=ControladorDeDadosException.class)
+	public void cadastraNovaOcorrenciaComUidFuncNaoCadastrado() throws Exception {
 		long uidInvalidoDeFunc = 100;
 		long uidProj = this.cadastraProjetoValido();
 
@@ -119,8 +146,8 @@ public class TesteControladorDeDados {
 				prioridadeOcorrencia, tipoOcorrencia, uidInvalidoDeFunc, uidProj);
 	}
 	
-	@Test(expected=Exception.class)
-	public void cadastraNovaOcorrenciaComUidProjErrado() throws Exception {
+	@Test(expected=ControladorDeDadosException.class)
+	public void cadastraNovaOcorrenciaComUidProjNaoCadastrado() throws Exception {
 		long uidFunc = this.cadastraFuncionarioValido();
 		long uidInvalidoDeProj = 100;
 		
@@ -135,7 +162,7 @@ public class TesteControladorDeDados {
 		controlador.concluirOcorrencia(uidOcorrencia);
 	}
 	
-	@Test(expected=Exception.class)
+	@Test(expected=ControladorDeDadosException.class)
 	public void concluindoUmaOcorrenciaJaConcluida() throws Exception {
 		long uidOcorrencia = this.cadastraOcorrenciaValida();
 		

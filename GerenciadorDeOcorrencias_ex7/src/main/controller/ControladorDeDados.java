@@ -2,6 +2,7 @@ package main.controller;
 
 import java.util.HashMap;
 
+import main.exception.ControladorDeDadosException;
 import main.model.Funcionario;
 import main.model.Ocorrencia;
 import main.model.Ocorrencia.Prioridade;
@@ -20,10 +21,6 @@ public class ControladorDeDados {
 		this.funcionarios = new HashMap<>();
 		this.projetos = new HashMap<>();
 		this.ocorrenciasAbertas = new HashMap<>();
-		
-		Funcionario.zerarUID();
-		Projeto.zerarUID();
-		Ocorrencia.zerarUID();
 	}
 	
 	// Funcionario
@@ -41,9 +38,9 @@ public class ControladorDeDados {
 		return this.funcionarios.containsKey(uidFunc);
 	}
 	
-	public Funcionario getFuncionario(long uidFunc) throws Exception {
+	public Funcionario getFuncionario(long uidFunc) throws ControladorDeDadosException {
 		if(!this.funcionarioEstaCadastrado(uidFunc))
-			throw new Exception("Funcionario com uid = " +uidFunc+ " não esta cadastrado!");
+			throw new ControladorDeDadosException("Funcionario com uid = " +uidFunc+ " não esta cadastrado!");
 		return this.funcionarios.get(uidFunc);
 	}
 	
@@ -62,9 +59,9 @@ public class ControladorDeDados {
 		return this.projetos.containsKey(uidProj);
 	}
 	
-	public Projeto getProjeto(long uidProj) throws Exception {
+	public Projeto getProjeto(long uidProj) throws ControladorDeDadosException {
 		if(!this.projetoEstaCadastrado(uidProj))
-			throw new Exception("Projeto com uid = " +uidProj+ " não esta cadastrado!");
+			throw new ControladorDeDadosException("Projeto com uid = " +uidProj+ " não esta cadastrado!");
 		return this.projetos.get(uidProj);
 	}
 	
@@ -75,11 +72,11 @@ public class ControladorDeDados {
 		Projeto projeto = this.getProjeto(uidProj);
 		
 		if(!funcionarioPodeSerReponsavelPorMaisOcorrencias(responsavel))
-			throw new Exception("Funcionario " +responsavel+ " não pode ser responsavel por mais ocorrencias!");
+			throw new ControladorDeDadosException("Funcionario " +responsavel+ 
+					" não pode ser responsavel por mais ocorrencias!");
 		
 		Ocorrencia ocorrencia = new Ocorrencia(resumo, 
-				prioridade, tipo);
-		ocorrencia.setResponsavel(responsavel);
+				prioridade, tipo, responsavel);
 		projeto.addOcorrencia(ocorrencia);
 		this.ocorrenciasAbertas.put(ocorrencia.getUid(), ocorrencia);
 		return ocorrencia.getUid();
@@ -97,12 +94,12 @@ public class ControladorDeDados {
 		try{ 
 			this.getOcorrencia(uidOcorrencia);
 			return true;
-		}catch(Exception e){
+		}catch(ControladorDeDadosException e){
 			return false;
 		}
 	}
 	
-	public Ocorrencia getOcorrencia(long uidOcorrencia) throws Exception {
+	public Ocorrencia getOcorrencia(long uidOcorrencia) throws ControladorDeDadosException {
 		if(this.ocorrenciaEstaAberta(uidOcorrencia))
 			return this.ocorrenciasAbertas.get(uidOcorrencia);
 		
@@ -113,14 +110,14 @@ public class ControladorDeDados {
 			}
 		}
 		
-		throw new Exception("Ocorrencia com uid = " +uidOcorrencia+ " não esta cadastrada!");
+		throw new ControladorDeDadosException("Ocorrencia com uid = " +uidOcorrencia+ " não esta cadastrada!");
 	}
 	
-	public void concluirOcorrencia(long uidOcorrencia) throws Exception {
+	public void concluirOcorrencia(long uidOcorrencia) throws ControladorDeDadosException {
 		Ocorrencia ocorrencia = this.getOcorrencia(uidOcorrencia);
 		
-		if(ocorrencia.getEstado() != Ocorrencia.Estado.ABERTA)
-			throw new Exception("Tentativa de concluir a ocorrencia " +ocorrencia+ " que ja esta concluida!");
+		if(ocorrencia.getEstado() == Ocorrencia.Estado.COMPLETADA)
+			throw new ControladorDeDadosException("Tentativa de concluir a ocorrencia " +ocorrencia+ " que ja esta concluida!");
 		ocorrencia.setEstado(Ocorrencia.Estado.COMPLETADA);
 		this.ocorrenciasAbertas.remove(uidOcorrencia);
 	}

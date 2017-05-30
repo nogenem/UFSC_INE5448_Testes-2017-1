@@ -1,10 +1,12 @@
 package testes;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import main.exception.OcorrenciaException;
 import main.model.Funcionario;
 import main.model.Ocorrencia;
 
@@ -24,27 +26,28 @@ public class TesteOcorrencia {
 	
 	@Test
 	public void criaNovaOcorrencia() {
-		Ocorrencia ocorrencia = this.criaOcorrenciaValida();
+		Ocorrencia ocorrencia = this.criaOcorrenciaDeBugComPrioridadeAltaValida();
 
 		assertEquals(1, ocorrencia.getUid());
 		assertEquals(resumoOcorrencia, ocorrencia.getResumo());
 		assertEquals(prioridadeOcorrencia, ocorrencia.getPrioridade());
 		assertEquals(tipoOcorrencia, ocorrencia.getTipo());
 		assertEquals(Ocorrencia.Estado.ABERTA, ocorrencia.getEstado());
-		assertEquals(null, ocorrencia.getResponsavel());
+		assertEquals(this.responsavelPelaOcorrencia, ocorrencia.getResponsavel());
 	}
 	
 	@Test
 	public void atribuiResponsavelParaUmaOcorrencia() throws Exception {
-		Ocorrencia ocorrencia = this.criaOcorrenciaValida();
-		ocorrencia.setResponsavel(responsavelPelaOcorrencia);
+		Ocorrencia ocorrencia = this.criaOcorrenciaDeBugComPrioridadeAltaValida();
+		Funcionario novoResponsavel = new Funcionario("Ciclano de Souza");
+		ocorrencia.setResponsavel(novoResponsavel);
 		
-		assertEquals(responsavelPelaOcorrencia, ocorrencia.getResponsavel());
+		assertEquals(novoResponsavel, ocorrencia.getResponsavel());
 	}
 	
-	@Test(expected=Exception.class)
+	@Test(expected=OcorrenciaException.class)
 	public void atribuiResponsavelParaUmaOcorrenciaCompletada() throws Exception {
-		Ocorrencia ocorrencia = this.criaOcorrenciaValida();
+		Ocorrencia ocorrencia = this.criaOcorrenciaDeBugComPrioridadeAltaValida();
 		
 		ocorrencia.setEstado(Ocorrencia.Estado.COMPLETADA);
 		ocorrencia.setResponsavel(responsavelPelaOcorrencia);
@@ -52,7 +55,7 @@ public class TesteOcorrencia {
 	
 	@Test
 	public void trocaPrioridadeDeUmaOcorrencia() throws Exception {
-		Ocorrencia ocorrencia = this.criaOcorrenciaValida();//Iniciada como ALTA
+		Ocorrencia ocorrencia = this.criaOcorrenciaDeBugComPrioridadeAltaValida();
 		Ocorrencia.Prioridade prioridadeBaixa = Ocorrencia.Prioridade.BAIXA;
 		
 		ocorrencia.setPrioridade(prioridadeBaixa);
@@ -60,9 +63,9 @@ public class TesteOcorrencia {
 		assertEquals(prioridadeBaixa, ocorrencia.getPrioridade());
 	}
 	
-	@Test(expected=Exception.class)
+	@Test(expected=OcorrenciaException.class)
 	public void trocaPrioridadeDeUmaOcorrenciaCompletada() throws Exception {
-		Ocorrencia ocorrencia = this.criaOcorrenciaValida();//Iniciada como ALTA
+		Ocorrencia ocorrencia = this.criaOcorrenciaDeBugComPrioridadeAltaValida();
 		Ocorrencia.Prioridade prioridadeBaixa = Ocorrencia.Prioridade.BAIXA;
 		
 		ocorrencia.setEstado(Ocorrencia.Estado.COMPLETADA);
@@ -71,22 +74,22 @@ public class TesteOcorrencia {
 	
 	@Test
 	public void igualdadeDeOcorrenciasIguais() throws Exception {
-		Ocorrencia ocorrencia = this.criaOcorrenciaValida();
+		Ocorrencia ocorrencia = this.criaOcorrenciaDeBugComPrioridadeAltaValida();
 		
 		assertEquals(ocorrencia, ocorrencia);
 	}
 	
 	@Test
 	public void igualdadeDeProjetosNaoIguais() throws Exception {
-		Ocorrencia ocorrencia1 = this.criaOcorrenciaValida();
-		Ocorrencia ocorrencia2 = this.criaOcorrenciaValida();
+		Ocorrencia ocorrencia1 = this.criaOcorrenciaDeBugComPrioridadeAltaValida();
+		Ocorrencia ocorrencia2 = this.criaOcorrenciaDeBugComPrioridadeAltaValida();
 
 		assertNotEquals(ocorrencia1, ocorrencia2);
 	}
 	
 	@Test
 	public void igualdadeDeProjetosPassandoNull() throws Exception {
-		Ocorrencia ocorrencia = this.criaOcorrenciaValida();
+		Ocorrencia ocorrencia = this.criaOcorrenciaDeBugComPrioridadeAltaValida();
 		
 		assertNotEquals(ocorrencia, null);
 	}
@@ -106,7 +109,8 @@ public class TesteOcorrencia {
 	}
 	
 	// Métodos uteis
-	private Ocorrencia criaOcorrenciaValida(){
-		return new Ocorrencia(resumoOcorrencia, prioridadeOcorrencia, tipoOcorrencia);
+	private Ocorrencia criaOcorrenciaDeBugComPrioridadeAltaValida(){
+		return new Ocorrencia(resumoOcorrencia, prioridadeOcorrencia, 
+				tipoOcorrencia, this.responsavelPelaOcorrencia);
 	}
 }
