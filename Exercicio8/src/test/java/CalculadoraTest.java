@@ -32,7 +32,6 @@ public class CalculadoraTest {
 	
 	@Test
 	public void vinteVezesQuatro() {
-		driver.findElement(By.linkText("C")).click();
 	    driver.findElement(By.linkText("2")).click();
 	    driver.findElement(By.linkText("0")).click();
 	    driver.findElement(By.linkText("×")).click();
